@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0a0b0f">
+<title>Zéphyr — Compagnon de combat</title>
+<style>
+:root{
+  --bg:#07080b;--panel:#101318;--panel2:#171b22;--line:#343b47;
+  --ivory:#f6f0e6;--muted:#aeb5bf;--silver:#d9dee5;--gold:#e5b85f;
+  --gold2:#ffd98a;--ember:#ff7a2f;--red:#8c263b;--red2:#d34b55;--blue:#6ab0ff;--green:#4f8067;
+}
+*{box-sizing:border-box}html{background:var(--bg)}body{margin:0;color:var(--ivory);font-family:Georgia,"Times New Roman",serif;background:
+radial-gradient(circle at 15% -10%,rgba(255,122,47,.16),transparent 31%),
+radial-gradient(circle at 85% -10%,rgba(220,225,235,.12),transparent 34%),
+linear-gradient(180deg,#0c0d11,#07080b 58%,#050609)}
+button,input,select{font:inherit}button{min-height:44px;border:1px solid #454d5b;background:#1b2028;color:var(--ivory);border-radius:10px;padding:9px 12px;cursor:pointer}button:active{transform:translateY(1px)}button:disabled{opacity:.38;cursor:not-allowed;filter:saturate(.45)}
+.wrap{max-width:1120px;margin:auto;padding:10px}.shell{position:relative;overflow:hidden;background:linear-gradient(180deg,rgba(19,22,28,.97),rgba(9,11,15,.98));border:1px solid #3a414d;border-radius:18px;padding:14px;box-shadow:0 20px 60px rgba(0,0,0,.48)}
+.shell:before{content:"";position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--gold),var(--silver),var(--ember),var(--gold))}
+.head{text-align:center;padding:5px 4px 14px;border-bottom:1px solid #333a44}.head h1{margin:0;font-size:clamp(34px,8vw,58px);letter-spacing:.13em;background:linear-gradient(90deg,#fff5d8,#dfe7ef 48%,#ffc36e 72%,#ff8a46);-webkit-background-clip:text;background-clip:text;color:transparent}.subtitle{color:var(--muted);font-style:italic}.motto{font-size:12px;color:#d7c9ae;margin-top:4px;letter-spacing:.06em}
+.grid{display:grid;gap:8px}.stats{grid-template-columns:repeat(7,1fr);margin-top:12px}.card{background:linear-gradient(180deg,var(--panel2),var(--panel));border:1px solid var(--line);border-radius:12px;padding:11px}.center{text-align:center}.big{display:block;font-size:22px;font-weight:bold;color:#fff}.big.gold{color:var(--gold2)}.big.ember{color:#ff9a62}.big.silver{color:#e6edf5}
+.hp-controls{display:flex;justify-content:center;align-items:center;gap:5px;margin-top:4px}.hp-controls input{width:66px;min-height:44px;text-align:center;background:#0b0d12;color:var(--ivory);border:1px solid #444b58;border-radius:8px;font-size:16px}
+.tabs{display:flex;flex-wrap:wrap;gap:7px;margin:12px 0;position:sticky;top:max(6px,env(safe-area-inset-top));z-index:20;padding:6px;border:1px solid rgba(80,88,100,.7);border-radius:14px;background:rgba(9,11,15,.9);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}.tab{flex:1 1 130px}.tab.active{background:linear-gradient(90deg,#5f4720,#4c4f58,#6d2c2e);border-color:#cda968}.panel{display:none}.panel.active{display:block}
+.two{grid-template-columns:repeat(2,1fr)}.three{grid-template-columns:repeat(3,1fr)}.four{grid-template-columns:repeat(4,1fr)}.action-title{font-weight:bold;font-size:17px}.golden .action-title{color:var(--gold2)}.infernal .action-title{color:#ff9b90}.silver .action-title{color:#e6edf5}.blue .action-title{color:#aad5ff}.green .action-title{color:#9ed0b9}.meta{font-size:13px;color:var(--muted);margin-top:3px}.row{display:flex;gap:7px;flex-wrap:wrap;margin-top:9px}.tag{display:inline-block;border:1px solid #4b5360;border-radius:999px;padding:2px 7px;font-size:12px;color:var(--muted);margin:2px 4px 2px 0}.rule{border-left:3px solid #b88e46;padding:9px 11px;background:#15171c;color:var(--muted);border-radius:6px;font-size:13px;margin-top:10px}
+.btn-gold{background:linear-gradient(180deg,#5c4520,#382a14);border-color:#9e7b3e}.btn-silver{background:linear-gradient(180deg,#30353d,#1c2026);border-color:#697381}.btn-red{background:linear-gradient(180deg,#64262e,#3c191f);border-color:#96434d}.btn-blue{background:linear-gradient(180deg,#244766,#152c41);border-color:#4e779d}.btn-green{background:linear-gradient(180deg,#294837,#172a21);border-color:#4f8067}.btn-ember{background:linear-gradient(180deg,#71301c,#431c12);border-color:#a5532e}
+/* same table-ready turn bar philosophy as Kentaro */
+.turn-economy{display:grid;grid-template-columns:auto repeat(4,1fr) auto;gap:7px;align-items:stretch;margin-top:10px}.turn-label{display:flex;align-items:center;justify-content:center;min-width:86px;min-height:56px;padding:7px 10px;border:1px solid #665235;border-radius:9px;background:linear-gradient(180deg,#221c13,#12100d);color:#f0c36d;flex-direction:column;gap:3px}.turn-damage{font-size:11px;color:#ffd9a0;white-space:nowrap}.turn-next{min-height:56px;white-space:nowrap;padding:7px 14px;border-color:#6b5b38;background:linear-gradient(180deg,#3a3020,#211a11);color:#f0d08b;font-weight:bold}.eco{padding:7px 8px;border:1px solid #394154;border-radius:9px;background:#0c0e14;text-align:center;font-size:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:56px;line-height:1.15}.eco b{display:block;font-size:13px;margin-bottom:4px;line-height:1}.eco.used{opacity:.55;border-color:#70424a;background:#171014}.eco.free{border-color:#456a55}.eco.move-used{border-color:#81652e;background:#1a160e}
+.section-title{margin:12px 0 7px;font-size:14px;letter-spacing:.08em;text-transform:uppercase;color:#d8c7a6}.action-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.spell-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.resource-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
+.slotrow{display:flex;align-items:center;gap:8px;margin:7px 0;flex-wrap:wrap}.pip{width:30px;height:30px;min-height:30px;padding:0;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--ember));border-color:#b48665}.pip.off{background:transparent;border-color:#495166}.small-input{width:74px;min-height:40px;background:#0b0d12;color:var(--ivory);border:1px solid #444b58;border-radius:8px;padding:7px;text-align:center}
+.statusbox{margin-top:8px;padding:9px;border:1px solid #394154;border-radius:9px;background:#0c0e14;font-size:13px;color:#c8ced8}.statusbox.warn{border-color:#82414b;background:#1c1115;color:#ffd2d6}.statusbox.good{border-color:#456a55;background:#101914;color:#cce8d8}
+.concentration{display:flex;align-items:center;justify-content:space-between;gap:10px}.concentration strong{color:var(--gold2)}
+/* fixed journal ribbon */
+#zephyr-ribbon{position:fixed;top:max(8px,env(safe-area-inset-top));left:50%;transform:translate(-50%,-145%);width:min(calc(100% - 16px),800px);z-index:9999;background:linear-gradient(90deg,#4d452f 0%,#353941 48%,#6b2c25 100%);border:2px solid #e5bd70;border-radius:14px;padding:12px 14px;box-shadow:0 12px 34px rgba(0,0,0,.65),0 0 0 2px rgba(231,187,105,.1) inset;opacity:0;pointer-events:none;transition:.25s ease}#zephyr-ribbon.show{transform:translate(-50%,0);opacity:1;pointer-events:auto}#zephyr-ribbon .title{color:#fff0d1;font-weight:800;font-size:14px;letter-spacing:.06em;text-transform:uppercase}#zephyr-ribbon .body{margin-top:6px;color:#fff;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:15px;line-height:1.35;white-space:pre-wrap;font-weight:800}#zephyr-ribbon .hint{margin-top:5px;color:#ddd4c5;font-size:11px}
+.log{margin-top:10px;background:#06070a;border:1px solid #343b45;border-radius:11px;min-height:150px;max-height:320px;overflow:auto;padding:11px;white-space:pre-wrap;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13px}.footer-actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:12px}
+.utility-bar{display:grid;grid-template-columns:1.3fr 1fr;gap:8px;margin-top:12px;padding-top:10px;border-top:1px solid #303740}.utility-group{display:grid;gap:7px}.utility-rest{grid-template-columns:repeat(3,1fr)}.utility-tools{grid-template-columns:repeat(3,1fr)}
+@media(max-width:820px){.stats{grid-template-columns:repeat(3,1fr)}.action-grid,.spell-grid{grid-template-columns:repeat(2,1fr)}.resource-grid{grid-template-columns:repeat(2,1fr)}.turn-economy{grid-template-columns:repeat(2,1fr)}.turn-label,.turn-next{grid-column:span 1}.two,.three,.four{grid-template-columns:1fr}.utility-bar{grid-template-columns:1fr}.wrap{padding:7px}.shell{padding:10px}}
+@media(max-width:520px){.action-grid,.spell-grid{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+<div id="zephyr-ribbon"><div class="title">Journal de tour</div><div class="body" id="ribbonBody"></div><div class="hint">Touchez le ruban pour le masquer.</div></div>
+<div class="wrap"><div class="shell">
+  <header class="head">
+    <div style="font-size:20px;color:var(--gold2)">✦ 🔥 ✦</div>
+    <h1>ZÉPHYR</h1>
+    <div class="subtitle">Paladin 10 • Tieffelin • Serment de Conquête</div>
+    <div class="motto">La Flamme d’Argent éclaire encore — discipline, protection, conquête.</div>
+  </header>
+
+  <section class="grid stats">
+    <div class="card center"><span>PV</span><span class="big ember" id="hpDisplay">84/84</span><div class="hp-controls"><input id="hpDelta" type="number" inputmode="numeric" placeholder="±PV"><button onclick="applyHp()">OK</button></div></div>
+    <div class="card center"><span>CA</span><span class="big silver">21</span><span class="meta">maille + bouclier +3</span></div>
+    <div class="card center"><span>FOR</span><span class="big ember">25</span><span class="meta">Ceinture géant du feu</span></div>
+    <div class="card center"><span>CHA</span><span class="big gold">19</span><span class="meta">mod. +4</span></div>
+    <div class="card center"><span>DD sorts</span><span class="big gold">16</span></div>
+    <div class="card center"><span>Atq. sorts</span><span class="big silver">+8</span></div>
+    <div class="card center"><span>Vitesse</span><span class="big silver">9 m</span></div>
+  </section>
+
+  <section class="turn-economy">
+    <div class="turn-label"><b>TOUR <span id="turnNo">1</span></b><span class="turn-damage">Dégâts : <span id="turnDamage">0</span></span></div>
+    <button class="eco free" id="ecoAction" onclick="toggleEco('action')"><b>Action</b><span>Disponible</span></button>
+    <button class="eco free" id="ecoBonus" onclick="toggleEco('bonus')"><b>Action bonus</b><span>Disponible</span></button>
+    <button class="eco free" id="ecoReaction" onclick="toggleEco('reaction')"><b>Réaction</b><span>Disponible</span></button>
+    <button class="eco free" id="ecoMove" onclick="toggleEco('move')"><b>Mouvement</b><span>9 m</span></button>
+    <button class="turn-next" onclick="nextTurn()">Tour suivant →</button>
+  </section>
+
+  <nav class="tabs">
+    <button class="tab active" data-panel="combat">⚔ Combat</button>
+    <button class="tab" data-panel="sorts">✦ Sorts</button>
+    <button class="tab" data-panel="auras">◉ Auras</button>
+    <button class="tab" data-panel="resources">◈ Ressources</button>
+    <button class="tab" data-panel="journal">☷ Journal</button>
+  </nav>
+
+  <main>
+    <section class="panel active" id="combat">
+      <div class="card concentration"><div><strong>Concentration</strong><div class="meta" id="concText">Aucune</div></div><button class="btn-silver" onclick="clearConcentration()">Rompre</button></div>
+      <div class="section-title">Actions de combat</div>
+      <div class="grid action-grid">
+        <article class="card golden"><div class="action-title">Poings de paladin</div><div class="meta">+11 • 1d8+7 contondants • 2 attaques/action</div><div class="row"><button class="btn-gold" onclick="attack(false)">Attaque</button><button class="btn-red" onclick="attack(true)">Forcer critique</button></div></article>
+        <article class="card golden"><div class="action-title">Châtiment divin</div><div class="meta">Après une touche • +2d8/+3d8/+4d8 • +1d8 fiélon/MV</div><div class="row"><button class="btn-gold" onclick="smite(1)">N1</button><button class="btn-gold" onclick="smite(2)">N2</button><button class="btn-ember" onclick="smite(3)">N3</button></div><label class="meta"><input type="checkbox" id="fiendUndead"> Fiélon / mort-vivant</label></article>
+        <article class="card silver"><div class="action-title">Présence conquérante</div><div class="meta">Action • 9 m • Sagesse DD 16 • terrorisé 1 min</div><div class="row"><button class="btn-silver" onclick="usePresence()">Déployer la peur</button></div></article>
+        <article class="card silver"><div class="action-title">Frappe guidée</div><div class="meta">Conduit divin • +10 après le d20, avant résultat</div><div class="row"><button class="btn-silver" onclick="guidedStrike()">+10 au jet</button></div></article>
+        <article class="card green"><div class="action-title">Style Protection</div><div class="meta">Réaction • bouclier requis • désavantage à une attaque contre un allié à 1,5 m</div><div class="row"><button class="btn-green" onclick="useReaction('Style Protection : désavantage imposé à l’attaque contre un allié.')">Protéger</button></div></article>
+        <article class="card infernal"><div class="action-title">Représailles infernales</div><div class="meta">Réaction • DEX DD 16 • 2d10 feu (moitié réussite)</div><div class="row"><button class="btn-red" onclick="hellishRebuke()">Répliquer</button></div></article>
+        <article class="card infernal"><div class="action-title">Décret de la Corne Brisée</div><div class="meta">1/repos long • Injonction sans slot • peut être réaction au début du tour adverse</div><div class="row"><select id="decreeOrder" class="small-input" style="width:auto"><option>Agenouille-toi</option><option>Confesse</option><option>Tais-toi</option><option>Cède</option><option>Approche</option><option>Lâche</option><option>Fuis</option><option>Tombe</option><option>Halte</option></select><button class="btn-red" onclick="useDecree()">Prononcer</button></div></article>
+        <article class="card green"><div class="action-title">Imposition des mains</div><div class="meta">Réserve 50 PV • 5 pts = maladie/poison • Marque : soin d’autrui réduit le PV max de Zéphyr</div><div class="row"><input id="layAmount" class="small-input" type="number" min="1" max="50" value="10"><select id="layTarget" class="small-input" style="width:auto"><option value="self">Zéphyr</option><option value="ally">Allié</option></select><button class="btn-green" onclick="layOnHands()">Soigner</button></div></article>
+        <article class="card golden"><div class="action-title">Expert de la charge</div><div class="meta">Après Foncer • action bonus • si 3 m en ligne droite : +5 dégâts ou repousse 3 m</div><div class="row"><button class="btn-gold" onclick="chargeAttack()">Charge +5</button></div></article>
+        <article class="card blue"><div class="action-title">Ancre sacrée</div><div class="meta">1/jour • une attaque : dégâts ÷2 • alliés à 9 m récupèrent 14 PV</div><div class="row"><button class="btn-blue" onclick="useAnchor()">Activer</button></div></article>
+        <article class="card silver"><div class="action-title">Sens divin</div><div class="meta">Action • 18 m • célestes, fiélons, morts-vivants, lieux consacrés/profanés</div><div class="row"><button class="btn-silver" onclick="useDivineSense()">Détecter</button></div></article>
+        <article class="card golden"><div class="action-title">Arme spirituelle</div><div class="meta">Action bonus • +8 • 1d8+4 force • pas de concentration selon le grimoire fourni</div><div class="row"><button class="btn-gold" onclick="spiritualWeapon()">Attaquer</button></div></article>
+      </div>
+      <div class="rule">Rappel tactique : Zéphyr est meilleur au contact, idéalement à 3 m des alliés et des ennemis terrorisés. Sa réaction est une ressource majeure : Protection, Représailles infernales et Décret peuvent se concurrencer.</div>
+    </section>
+
+    <section class="panel" id="sorts">
+      <div class="section-title">Niveau 1</div>
+      <div class="grid spell-grid">
+        <article class="card"><div class="action-title">Armure d’Agathys</div><div class="meta">Action • 1 h • N1/N2/N3 = 5/10/15 PV temp et dégâts froid</div><div class="row"><button onclick="castAgathys(1)">N1</button><button onclick="castAgathys(2)">N2</button><button onclick="castAgathys(3)">N3</button></div></article>
+        <article class="card"><div class="action-title">Bénédiction</div><div class="meta">Action • concentration • 3 cibles • +1d4 attaques & sauvegardes</div><div class="row"><button class="btn-gold" onclick="castSpell('Bénédiction',1,'action',true)">Lancer N1</button></div></article>
+        <article class="card"><div class="action-title">Châtiment tonitruant</div><div class="meta">Action bonus • concentration • prochaine touche +2d6 tonnerre, repousse 3 m + à terre sur échec FOR</div><div class="row"><button class="btn-ember" onclick="castSpell('Châtiment tonitruant',1,'bonus',true)">Préparer</button></div></article>
+        <article class="card"><div class="action-title">Bouclier de la foi</div><div class="meta">Action bonus • concentration • +2 CA</div><div class="row"><button class="btn-silver" onclick="castSpell('Bouclier de la foi',1,'bonus',true)">Lancer</button></div></article>
+        <article class="card"><div class="action-title">Marque du chasseur</div><div class="meta">Action bonus • concentration • +1d6 à chaque attaque d’arme</div><div class="row"><button class="btn-red" onclick="castSpell('Marque du chasseur',1,'bonus',true)">Marquer</button></div></article>
+        <article class="card"><div class="action-title">Injonction</div><div class="meta">Action • 18 m • SAG DD 16 • ordre d’un mot</div><div class="row"><button onclick="castSpell('Injonction',1,'action',false)">Lancer</button></div></article>
+      </div>
+      <div class="section-title">Niveau 2</div>
+      <div class="grid spell-grid">
+        <article class="card"><div class="action-title">Aide</div><div class="meta">Action • 8 h • 3 créatures • +5 PV actuels et max (+10 en N3)</div><div class="row"><button onclick="castSpell('Aide',2,'action',false)">N2</button><button onclick="castSpell('Aide',3,'action',false)">N3</button></div></article>
+        <article class="card"><div class="action-title">Foulée brumeuse</div><div class="meta">Action bonus • téléportation 9 m</div><div class="row"><button class="btn-blue" onclick="castSpell('Foulée brumeuse',2,'bonus',false)">Téléporter</button></div></article>
+        <article class="card"><div class="action-title">Localisation d’objet</div><div class="meta">Action • concentration • 300 m</div><div class="row"><button onclick="castSpell('Localisation d’objet',2,'action',true)">Lancer</button></div></article>
+      </div>
+      <div class="section-title">Niveau 3</div>
+      <div class="grid spell-grid">
+        <article class="card"><div class="action-title">Peur</div><div class="meta">Action • concentration • cône 9 m • SAG DD 16 • combo Aura de conquête</div><div class="row"><button class="btn-red" onclick="castSpell('Peur',3,'action',true)">Terrifier</button></div></article>
+        <article class="card"><div class="action-title">Jeter une malédiction</div><div class="meta">Action • contact • concentration • plusieurs modes</div><div class="row"><button class="btn-red" onclick="castSpell('Jeter une malédiction',3,'action',true)">Maudire</button></div></article>
+        <article class="card"><div class="action-title">Revivifier</div><div class="meta">Action • contact • diamant 300 po • mort depuis moins d’1 min → 1 PV</div><div class="row"><button class="btn-silver" onclick="castSpell('Revivifier',3,'action',false)">Revivifier</button></div></article>
+        <article class="card"><div class="action-title">Aura de vitalité</div><div class="meta">Action • concentration • 9 m • action bonus : 2d6 soin</div><div class="row"><button class="btn-green" onclick="castSpell('Aura de vitalité',3,'action',true)">Activer</button><button class="btn-green" onclick="vitalityHeal()">Soin 2d6</button></div></article>
+      </div>
+    </section>
+
+    <section class="panel" id="auras">
+      <div class="grid two">
+        <article class="card golden"><div class="action-title">Aura de protection</div><div class="meta">Passif • 3 m • Zéphyr conscient</div><div class="statusbox good">Zéphyr et les alliés dans l’aura ajoutent +4 à tous leurs jets de sauvegarde. Les JdS de Zéphyr affichés sur sa fiche intègrent déjà ce bonus.</div></article>
+        <article class="card infernal"><div class="action-title">Aura de conquête</div><div class="meta">Passif • 3 m</div><div class="statusbox warn">Créature terrorisée par Zéphyr dans l’aura : vitesse 0. Si elle commence son tour dans l’aura : 5 dégâts psychiques.</div></article>
+        <article class="card silver"><div class="action-title">Aura de bravoure</div><div class="meta">Passif • 3 m • niveau 10</div><div class="statusbox good">Zéphyr et les alliés dans l’aura ne peuvent pas être terrorisés tant qu’il est conscient.</div></article>
+        <article class="card"><div class="action-title">Défenses permanentes</div><div class="meta">Tieffelin + paladin</div><div class="statusbox">Résistance aux dégâts de feu • Immunité aux maladies.</div></article>
+      </div>
+      <div class="section-title">BINAH — rappel séparé</div>
+      <div class="card"><div class="action-title">Vestige à statut non confirmé comme bouclier actif</div><div class="meta">Le dossier distingue BINAH du bouclier +3 actuellement responsable de la CA 21.</div><div class="rule">Si BINAH remplace réellement le bouclier +3, il faut recalculer la CA selon son état. Cette V1 n’écrase donc pas automatiquement la CA 21.</div></div>
+    </section>
+
+    <section class="panel" id="resources">
+      <div class="grid resource-grid">
+        <article class="card center"><div>Imposition</div><span class="big green" id="layDisplay">50/50</span><div class="meta">repos long</div></article>
+        <article class="card center"><div>Sens divin</div><span class="big silver" id="senseDisplay">5/5</span><div class="meta">repos long</div></article>
+        <article class="card center"><div>Conduit divin</div><span class="big gold" id="channelDisplay">1/1</span><div class="meta">repos court/long</div></article>
+        <article class="card center"><div>Décret</div><span class="big ember" id="decreeDisplay">1/1</span><div class="meta">repos long</div></article>
+        <article class="card center"><div>Ancre sacrée</div><span class="big silver" id="anchorDisplay">1/1</span><div class="meta">1/jour</div></article>
+        <article class="card center"><div>Marque d’Asmodeus</div><span class="big" id="markDisplay">Absente</span><div class="meta">déclenchée par le Décret</div></article>
+        <article class="card center"><div>PV max actuel</div><span class="big ember" id="maxHpDisplay">84</span><div class="meta">plancher sous Marque : 42</div></article>
+        <article class="card center"><div>PV temporaires</div><span class="big silver" id="tempHpDisplay">0</span><div class="meta">Armure d’Agathys</div></article>
+      </div>
+      <div class="section-title">Emplacements de sorts</div>
+      <div class="card">
+        <div class="slotrow"><b>N1</b><span id="slot1"></span></div>
+        <div class="slotrow"><b>N2</b><span id="slot2"></span></div>
+        <div class="slotrow"><b>N3</b><span id="slot3"></span></div>
+      </div>
+      <div class="utility-bar">
+        <div class="utility-group utility-rest"><button class="btn-green" onclick="shortRest()">Repos court</button><button class="btn-green" onclick="longRest()">Repos long</button><button class="btn-silver" onclick="resetTurnOnly()">Reset tour</button></div>
+        <div class="utility-group utility-tools"><button onclick="saveState(true)">Sauvegarder</button><button onclick="loadState(true)">Recharger</button><button class="btn-red" onclick="hardReset()">Tout réinitialiser</button></div>
+      </div>
+    </section>
+
+    <section class="panel" id="journal">
+      <div class="card"><div class="action-title">Historique</div><div class="log" id="log"></div><div class="footer-actions"><button onclick="clearLog()">Vider le journal</button><button onclick="copyLog()">Copier</button></div></div>
+    </section>
+  </main>
+</div></div>
+<script>
+const DEFAULT={hp:84,maxHp:84,tempHp:0,lay:50,sense:5,channel:1,decree:1,anchor:1,mark:false,slots:{1:4,2:3,3:2},turn:1,turnDamage:0,eco:{action:false,bonus:false,reaction:false,move:false},concentration:'',log:[]};
+let S=JSON.parse(JSON.stringify(DEFAULT));
+const $=id=>document.getElementById(id);
+const d=n=>Math.floor(Math.random()*n)+1;
+function roll(count,sides,bonus=0){let r=[];for(let i=0;i<count;i++)r.push(d(sides));return {rolls:r,total:r.reduce((a,b)=>a+b,0)+bonus}}
+function log(msg,tone='normal'){const stamp=new Date().toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'});const line=`[${stamp}] ${msg}`;S.log.unshift(line);S.log=S.log.slice(0,120);renderLog();showRibbon(msg,tone);saveState();}
+function showRibbon(msg,tone='normal'){const r=$('zephyr-ribbon');$('ribbonBody').textContent=msg;r.classList.add('show');clearTimeout(window._ribbonTimer);window._ribbonTimer=setTimeout(()=>r.classList.remove('show'),4000)}
+$('zephyr-ribbon').onclick=()=>$('zephyr-ribbon').classList.remove('show');
+function useEco(kind){if(S.eco[kind]){log(`${labelEco(kind)} déjà utilisée ce tour.`,'warn');return false}S.eco[kind]=true;renderTurn();return true}
+function toggleEco(kind){S.eco[kind]=!S.eco[kind];renderTurn();saveState()}
+function labelEco(k){return ({action:'Action',bonus:'Action bonus',reaction:'Réaction',move:'Mouvement'})[k]}
+function renderTurn(){['action','bonus','reaction','move'].forEach(k=>{const el=$('eco'+k.charAt(0).toUpperCase()+k.slice(1));const used=S.eco[k];el.classList.toggle('used',used);el.classList.toggle('free',!used);if(k==='move')el.classList.toggle('move-used',used);el.querySelector('span').textContent=k==='move'?(used?'Utilisé':'9 m'):(used?'Utilisée':'Disponible')});$('turnNo').textContent=S.turn;$('turnDamage').textContent=S.turnDamage}
+function nextTurn(){S.turn++;S.turnDamage=0;S.eco={action:false,bonus:false,reaction:false,move:false};renderTurn();log(`Tour ${S.turn} — économie d’action réinitialisée.`)}
+function resetTurnOnly(){S.turnDamage=0;S.eco={action:false,bonus:false,reaction:false,move:false};renderTurn();log('Tour courant réinitialisé.')}
+function applyHp(){let v=parseInt($('hpDelta').value||0);if(!v)return;S.hp=Math.max(0,Math.min(S.maxHp,S.hp+v));$('hpDelta').value='';render();log(`${v>0?'Soin':'Dégâts'} ${Math.abs(v)} PV → ${S.hp}/${S.maxHp}.`)}
+function attack(forceCrit=false){if(!useEco('action'))return;const r=d(20),total=r+11,crit=forceCrit||r===20;let dmg=roll(crit?2:1,8,7);S.turnDamage+=dmg.total;renderTurn();log(`Poing de paladin : d20 ${r} +11 = ${total}. ${crit?'CRITIQUE — ':''}${dmg.rolls.join('+')}+7 = ${dmg.total} contondants.`)}
+function spendSlot(level){if(S.slots[level]<=0){log(`Plus d’emplacement N${level}.`,'warn');return false}S.slots[level]--;render();return true}
+function smite(level){if(!spendSlot(level))return;let dice=level+1+( $('fiendUndead').checked?1:0 );let r=roll(dice,8,0);S.turnDamage+=r.total;renderTurn();log(`Châtiment divin N${level}${$('fiendUndead').checked?' vs fiélon/MV':''} : ${dice}d8 = ${r.total} radiants.`)}
+function usePresence(){if(!useEco('action'))return;if(S.channel<1){log('Conduit divin indisponible.','warn');return}S.channel=0;render();log('Présence conquérante : créatures choisies à 9 m → JS Sagesse DD 16. Échec : terrorisées 1 min. À 3 m : Aura de conquête les verrouille à vitesse 0.')}
+function guidedStrike(){if(S.channel<1){log('Conduit divin indisponible.','warn');return}S.channel=0;render();log('Frappe guidée : +10 au jet d’attaque après le d20, avant de connaître le résultat.')}
+function useReaction(msg){if(!useEco('reaction'))return;log(msg)}
+function hellishRebuke(){if(!useEco('reaction'))return;let r=roll(2,10);log(`Représailles infernales : ${r.rolls.join('+')} = ${r.total} feu, DEX DD 16 pour moitié.`)}
+function useDecree(){if(S.decree<1){log('Décret déjà utilisé depuis le dernier repos long.','warn');return}if(!useEco('reaction'))return;S.decree=0;S.mark=true;render();log(`Décret — « ${$('decreeOrder').value} ». Injonction infernale, SAG DD 16. Marque d’Asmodeus activée.`)}
+function layOnHands(){let amount=parseInt($('layAmount').value||0);if(amount<=0||amount>S.lay){log('Montant d’Imposition invalide ou réserve insuffisante.','warn');return}if(!useEco('action'))return;S.lay-=amount;let target=$('layTarget').value;if(target==='self'){S.hp=Math.min(S.maxHp,S.hp+amount);log(`Imposition des mains sur Zéphyr : +${amount} PV.`)}else{if(S.mark){let loss=Math.floor(amount/2);S.maxHp=Math.max(42,S.maxHp-loss);S.hp=Math.min(S.hp,S.maxHp);log(`Imposition des mains sur allié : +${amount} PV à la cible. Marque d’Asmodeus : PV max de Zéphyr -${loss} → ${S.maxHp}.`)}else log(`Imposition des mains sur allié : +${amount} PV.`)}render()}
+function chargeAttack(){if(!useEco('bonus'))return;let r=d(20),tot=r+11;let dmg=roll(1,8,12);S.turnDamage+=dmg.total;renderTurn();log(`Expert de la charge : attaque +11 → ${r}+11=${tot}; dégâts 1d8+7+5 = ${dmg.total}. (Précondition : Foncer + 3 m en ligne droite.)`)}
+function useAnchor(){if(S.anchor<1){log('Ancre sacrée déjà utilisée aujourd’hui.','warn');return}S.anchor=0;render();log('Protection de l’Ancre Sacrée : dégâts d’une attaque choisis divisés par 2 ; chaque allié à 9 m récupère 14 PV.')}
+function useDivineSense(){if(S.sense<1){log('Sens divin épuisé.','warn');return}if(!useEco('action'))return;S.sense--;render();log('Sens divin actif jusqu’à la fin du prochain tour : célestes, fiélons, morts-vivants et sacré/profané à 18 m.')}
+function spiritualWeapon(){if(!useEco('bonus'))return;let r=d(20),tot=r+8,dr=roll(1,8,4);S.turnDamage+=dr.total;renderTurn();log(`Arme spirituelle : ${r}+8=${tot} pour toucher ; ${dr.rolls[0]}+4=${dr.total} force.`)}
+function castSpell(name,level,eco,conc){if(!spendSlot(level))return;if(eco && !useEco(eco)){S.slots[level]++;render();return}if(conc)setConcentration(name);log(`${name} lancé avec un emplacement N${level}${conc?' — concentration active.':''}`)}
+function castAgathys(level){if(!spendSlot(level))return;if(!useEco('action')){S.slots[level]++;render();return}S.tempHp=5*level;render();log(`Armure d’Agathys N${level} : ${S.tempHp} PV temporaires ; tant qu’ils subsistent, une attaque de mêlée qui touche inflige ${S.tempHp} froid à l’assaillant.`)}
+function vitalityHeal(){if(S.concentration!=='Aura de vitalité'){log('Aura de vitalité n’est pas la concentration active.','warn');return}if(!useEco('bonus'))return;let r=roll(2,6);log(`Aura de vitalité : soin 2d6 = ${r.total} PV.`)}
+function setConcentration(name){if(S.concentration && S.concentration!==name)log(`Concentration remplacée : ${S.concentration} → ${name}.`);S.concentration=name;render()}
+function clearConcentration(){if(!S.concentration)return;let old=S.concentration;S.concentration='';render();log(`Concentration rompue : ${old}.`)}
+function shortRest(){S.channel=1;render();log('Repos court : Conduit divin récupéré. Les autres ressources longues ne bougent pas.')}
+function longRest(){S.hp=84;S.maxHp=84;S.tempHp=0;S.lay=50;S.sense=5;S.channel=1;S.decree=1;S.anchor=1;S.mark=false;S.slots={1:4,2:3,3:2};S.concentration='';S.eco={action:false,bonus:false,reaction:false,move:false};S.turnDamage=0;render();log('Repos long : PV, slots et ressources restaurés ; Marque d’Asmodeus dissipée après prière sincère à la Flamme d’Argent.')}
+function renderSlots(level,max){let html='';for(let i=0;i<max;i++)html+=`<button class="pip ${i<S.slots[level]?'':'off'}" onclick="toggleSlot(${level},${i})" title="N${level}"></button>`;$('slot'+level).innerHTML=html}
+function toggleSlot(level,i){let max={1:4,2:3,3:2}[level];S.slots[level]=Math.max(0,Math.min(max,i<S.slots[level]?i:i+1));render();saveState()}
+function renderLog(){$('log').textContent=S.log.length?S.log.join('\n'):'Aucune action enregistrée.'}
+function render(){$('hpDisplay').textContent=`${S.hp}/${S.maxHp}`;$('layDisplay').textContent=`${S.lay}/50`;$('senseDisplay').textContent=`${S.sense}/5`;$('channelDisplay').textContent=`${S.channel}/1`;$('decreeDisplay').textContent=`${S.decree}/1`;$('anchorDisplay').textContent=`${S.anchor}/1`;$('markDisplay').textContent=S.mark?'PRÉSENTE':'Absente';$('markDisplay').style.color=S.mark?'#ff8f99':'#e6edf5';$('maxHpDisplay').textContent=S.maxHp;$('tempHpDisplay').textContent=S.tempHp;$('concText').textContent=S.concentration||'Aucune';renderSlots(1,4);renderSlots(2,3);renderSlots(3,2);renderTurn();renderLog();saveState()}
+function saveState(show=false){localStorage.setItem('zephyr-v1',JSON.stringify(S));if(show)showRibbon('État sauvegardé localement.')}
+function loadState(show=false){try{let x=localStorage.getItem('zephyr-v1');if(x)S={...JSON.parse(JSON.stringify(DEFAULT)),...JSON.parse(x)};render();if(show)showRibbon('État rechargé.')}catch(e){showRibbon('Impossible de recharger l’état.')}}
+function hardReset(){if(!confirm('Réinitialiser complètement le compagnon ?'))return;S=JSON.parse(JSON.stringify(DEFAULT));render();log('Compagnon réinitialisé.')}
+function clearLog(){S.log=[];renderLog();saveState()}
+async function copyLog(){try{await navigator.clipboard.writeText(S.log.join('\n'));showRibbon('Journal copié.')}catch(e){showRibbon('Copie impossible sur ce navigateur.')}}
+document.querySelectorAll('.tab').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));document.querySelectorAll('.panel').forEach(x=>x.classList.remove('active'));b.classList.add('active');$(b.dataset.panel).classList.add('active')}));
+loadState(false);render();
+</script>
+</body></html>
