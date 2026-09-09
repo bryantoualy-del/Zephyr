@@ -1,0 +1,38 @@
+name: Apply Zephyr vitals temp HP
+on:
+  push:
+    paths:
+      - 'tools/patch-vitals-temp-hp.py'
+      - '.github/workflows/apply-vitals-temp-hp.yml'
+permissions:
+  contents: write
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Apply patch
+        run: python tools/patch-vitals-temp-hp.py
+      - name: Validate JavaScript
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+          s=Path('index.html').read_text(encoding='utf-8')
+          m=re.search(r'<script>([\s\S]*?)</script>',s)
+          if not m: raise SystemExit('No script found')
+          Path('/tmp/zephyr.js').write_text(m.group(1),encoding='utf-8')
+          PY
+          node --check /tmp/zephyr.js
+      - name: Commit companion and clean helper files
+        run: |
+          git config user.name 'bryantoualy-del'
+          git config user.email 'bryantoualy@gmail.com'
+          git add index.html
+          git commit -m 'Add HP controls, temp HP and Agathys tracking'
+          git rm tools/patch-vitals-temp-hp.py .github/workflows/apply-vitals-temp-hp.yml
+          git commit -m 'Clean one-shot vitals integration helpers'
+          git push
