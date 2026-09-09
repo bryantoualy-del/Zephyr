@@ -1,9 +1,0 @@
-const fs=require('fs');
-const p='index.html';
-let s=fs.readFileSync(p,'utf8');
-s=s.replace('<div class="arrow-options"><label>Amplification<select id="arrowSlot"><option value="0">Aucune</option><option value="1">N1 : +1d6</option><option value="2">N2 : +2d6</option><option value="3">N3 : +3d6</option></select></label><label>Recharge<button class="btn silver" id="arrowReset" type="button" style="min-height:42px;width:100%;margin-top:4px">Aube → 3/3</button></label></div>','<div class="arrow-options" style="grid-template-columns:1fr"><label>Amplification<select id="arrowSlot"><option value="0">Aucune</option><option value="1">N1 : +1d6</option><option value="2">N2 : +2d6</option><option value="3">N3 : +3d6</option></select></label></div>');
-s=s.replace("function longRest(){S.hp=84;S.maxHp=84;S.slots={1:4,2:3,3:2};S.lay=50;S.sense=5;S.channel=1;S.decree=1;S.anchor=1;S.mark=false;S.conc='';S.spellSmite=null;S.lastHit=null;S.attackCount=0;S.guidedReady=false;S.eco={a:false,b:false,r:false,m:false};addLog('Repos long','PV, slots et ressources restaurés • Marque dissipée après prière.','rest')}","function longRest(){S.hp=84;S.maxHp=84;S.slots={1:4,2:3,3:2};S.lay=50;S.sense=5;S.channel=1;S.decree=1;S.anchor=1;S.arrows=3;S.mark=false;S.conc='';S.spellSmite=null;S.lastHit=null;S.attackCount=0;S.guidedReady=false;S.eco={a:false,b:false,r:false,m:false};addLog('Repos long','PV, slots, flèches et ressources restaurés • Marque dissipée après prière.','rest')}");
-s=s.replace("$('arrowReset').addEventListener('click',function(){S.arrows=3;addLog('Flèches de la Flamme d’Argent','3/3 charges restaurées à l’aube.','resource')});",'');
-if(s.includes('id="arrowReset"')) throw new Error('arrowReset still present');
-if(!s.includes('S.arrows=3;S.mark=false')) throw new Error('long rest arrow reset missing');
-fs.writeFileSync(p,s);
