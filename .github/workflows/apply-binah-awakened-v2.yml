@@ -1,0 +1,28 @@
+name: Apply BINAH awakened v2
+on:
+  push:
+    paths:
+      - '.github/binah-awakened-v2-trigger.txt'
+permissions:
+  contents: write
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Patch
+        run: python3 .github/scripts/patch_binah_awakened.py
+      - name: Validate
+        run: |
+          python3 -c "import re,pathlib; s=pathlib.Path('index.html').read_text(); pathlib.Path('/tmp/zephyr.js').write_text(re.search(r'<script>(.*?)</script>',s,re.S).group(1))"
+          node --check /tmp/zephyr.js
+      - name: Commit
+        run: |
+          git config user.name "bryantoualy-del"
+          git config user.email "bryantoualy@gmail.com"
+          git add index.html
+          git commit -m "Refine awakened BINAH mechanics actions and prismatic FX"
+          git push
