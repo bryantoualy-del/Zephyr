@@ -1,0 +1,1 @@
+apply BINAH tab and move auras into Powers
