@@ -1,0 +1,52 @@
+name: Apply Zephyr CA BINAH fix
+on:
+  push:
+    paths:
+      - '.github/workflows/apply-ca-binah-fix.yml'
+permissions:
+  contents: write
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Patch CA
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('index.html')
+          s=p.read_text()
+          old='<div class="chip"><small>CA</small><b>21</b></div>'
+          new='<div class="chip"><small>CA</small><b id="acTop">20</b></div>'
+          if old in s:
+              s=s.replace(old,new,1)
+          elif 'id="acTop"' not in s:
+              raise SystemExit('CA HUD marker not found')
+          marker="function render(){if($('hpTop'))$('hpTop').textContent=S.hp+'/'+S.maxHp;"
+          repl=marker+"if($('acTop'))$('acTop').textContent=(S.conc==='Bouclier de la foi'?22:20);"
+          if marker in s and "$('acTop').textContent" not in s:
+              s=s.replace(marker,repl,1)
+          elif "$('acTop').textContent" not in s:
+              raise SystemExit('render marker not found')
+          p.write_text(s)
+          PY
+      - name: Validate JavaScript
+        run: |
+          python3 - <<'PY'
+          import re,pathlib
+          s=pathlib.Path('index.html').read_text()
+          m=re.search(r'<script>(.*?)</script>',s,re.S)
+          if not m: raise SystemExit('script not found')
+          pathlib.Path('/tmp/zephyr.js').write_text(m.group(1))
+          PY
+          node --check /tmp/zephyr.js
+      - name: Commit
+        run: |
+          git config user.name "bryantoualy-del"
+          git config user.email "bryantoualy@gmail.com"
+          git add index.html
+          git commit -m "Set Zephyr AC to 20 with awakened BINAH and 22 under Shield of Faith"
+          git push
