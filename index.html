@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#090a0d">
-<title>Zéphyr — Compagnon mobile</title>
+<meta name="apple-mobile-web-app-title" content="Zéphyr"><title>Zéphyr — Compagnon mobile</title>
 <style>
 :root{--bg:#07080b;--panel:#11141a;--panel2:#181c23;--line:#353d49;--ivory:#f6f0e6;--muted:#aab2bd;--gold:#e5b85f;--gold2:#ffd98a;--ember:#ff8241;--red:#a33b45;--silver:#dfe6ee;--green:#5f9478;--blue:#6ba9e8;--navh:74px}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--ivory);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}body{padding-bottom:calc(var(--navh) + env(safe-area-inset-bottom));background:radial-gradient(circle at 10% 0,rgba(255,130,65,.12),transparent 30%),radial-gradient(circle at 90% 0,rgba(229,184,95,.10),transparent 28%),linear-gradient(#0c0d11,#07080b 62%)}button,input,select{font:inherit}button{touch-action:manipulation}.app{max-width:640px;margin:auto;min-height:100vh}.top{padding:calc(8px + env(safe-area-inset-top)) 14px 8px;text-align:center}.brand{font-size:27px;font-weight:900;letter-spacing:.12em;background:linear-gradient(90deg,#fff1c9,#e9edf2,#ff9d61);-webkit-background-clip:text;background-clip:text;color:transparent}.sub{font-size:11px;color:var(--muted);margin-top:2px}
@@ -90,14 +90,15 @@ body.holy-shake{animation:holyShake .4s cubic-bezier(.36,.07,.19,.97) both}
 @media(min-width:700px){#ribbon{bottom:calc(var(--navh) + 14px + env(safe-area-inset-bottom))}}
 @media(prefers-reduced-motion:reduce){#ribbon{transition:none}}
 .company-kicker{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.16em;color:#e8c786;margin-bottom:2px}
+.brand-row{display:flex;align-items:center;justify-content:center;gap:11px}.zephyr-emblem{width:58px;height:58px;object-fit:cover;border-radius:14px;filter:drop-shadow(0 0 12px #e5b85f55)}@media(max-width:430px){.zephyr-emblem{width:48px;height:48px}}
 </style>
-</head>
+<link rel="stylesheet" href="social-dice.css?v=1"><link rel="icon" type="image/png" sizes="192x192" href="assets/icon-192.png?v=1"><link rel="apple-touch-icon" sizes="180x180" href="assets/icon-180.png?v=1"><link rel="manifest" href="site.webmanifest?v=1"></head>
 <body>
 <div id="fxLayer" class="fx-layer"></div>
 <div id="hitModal" class="hit-modal" aria-hidden="true"><div class="hit-box" role="dialog" aria-modal="true" aria-labelledby="hitTitle"><div class="hit-kicker">Résolution d’attaque</div><div class="hit-title" id="hitTitle">L’attaque touche ?</div><div class="hit-roll" id="hitRoll"></div><div class="hit-question">Le MJ confirme-t-il la touche ?</div><div class="hit-actions"><button id="hitYes" class="hit-yes" type="button">✓ Touché</button><button id="hitNo" class="hit-no" type="button">✕ Raté</button></div></div></div>
 <div id="ribbon"><b>Journal</b><span id="ribbonText"></span></div>
 <div class="app">
-<header class="top"><div class="company-kicker">Compagnie Créole</div><div class="brand">ZÉPHYR</div><div class="sub">Paladin 10 • Serment de Conquête • Flamme d’Argent</div></header>
+<header class="top"><div class="company-kicker">Compagnie Créole</div><div class="brand-row"><img class="zephyr-emblem" src="assets/icon-512.png?v=1" alt=""><div class="brand">ZÉPHYR</div></div><div class="sub">Paladin 10 • Serment de Conquête • Flamme d’Argent</div></header>
 <section class="hud">
 <div class="hudtop"><div class="reststack"><button class="restbtn" id="shortRest" type="button">☕ Court</button><button class="restbtn long" id="longRest" type="button">☾ Long</button></div><div class="concchip" id="concChip"><div class="ctxt"><small>Concentration</small><b id="concText">Aucune</b></div><button class="concstop" id="clearConc" type="button" aria-label="Rompre concentration">×</button></div></div>
 <div class="hudrow"><div class="chip hp"><small>PV</small><b id="hpTop">84/84</b></div><div class="chip temp"><small>PV temp</small><b id="tempHpTop">0</b></div><div class="chip"><small>CA</small><b id="acTop">20</b></div><div class="chip"><small>Tour</small><b id="turnTop">1</b></div></div><div class="vitalsbar"><div class="vitalctl"><button id="hpMinus" type="button">−</button><span>PV <b id="dmgTop">0</b> dmg/tour</span><button id="hpPlus" type="button">+</button></div><div class="vitalctl tempctl"><button id="tempMinus" type="button">−</button><span>PV temporaires</span><button id="tempPlus" type="button">+</button></div></div>
@@ -141,9 +142,10 @@ body.holy-shake{animation:holyShake .4s cubic-bezier(.36,.07,.19,.97) both}
 </section>
 <section class="screen" id="social">
 <div class="subtabs" role="tablist" aria-label="Social et inventaire">
-  <button class="subtab active" type="button" data-subgroup="social" data-subtab="abilities">Carac & JDS</button>
-  <button class="subtab" type="button" data-subgroup="social" data-subtab="skills">Compétences</button>
+  <button class="subtab active" type="button" data-subgroup="social" data-subtab="skills">Compétences</button>
+  <button class="subtab" type="button" data-subgroup="social" data-subtab="abilities">Carac. & JdS</button>
   <button class="subtab" type="button" data-subgroup="social" data-subtab="inventory">Inventaire</button>
+  <button class="subtab" type="button" data-subgroup="social" data-subtab="info">Infos utiles</button>
 </div>
 
 <div class="social-modebar sticky-rollmode" aria-label="Mode de jet social">
@@ -152,7 +154,7 @@ body.holy-shake{animation:holyShake .4s cubic-bezier(.36,.07,.19,.97) both}
   <button class="social-mode" type="button" data-social-mode="dis">Désavantage</button>
 </div>
 
-<div class="subpane active" data-subgroup-pane="social" data-subpane="abilities">
+<div class="subpane" data-subgroup-pane="social" data-subpane="abilities">
   <div class="card social-reference">
     <div class="title">Repères de Zéphyr</div>
     <div class="social-refgrid"><span>Maîtrise <b>+4</b></span><span>Initiative <b>−1</b></span><span>Vitesse <b>9 m</b></span><span>DD sorts <b>16</b></span><span>Att. sort <b>+8</b></span><span>CA <b>20</b></span><span>PV <b>84</b></span><span>CHA <b>19 · +4</b></span></div>
@@ -161,7 +163,7 @@ body.holy-shake{animation:holyShake .4s cubic-bezier(.36,.07,.19,.97) both}
   <div class="ability-grid" id="socialAbilities"></div>
 </div>
 
-<div class="subpane" data-subgroup-pane="social" data-subpane="skills">
+<div class="subpane active" data-subgroup-pane="social" data-subpane="skills">
   <div class="passive-strip">
     <span>Perception passive <b>9</b></span>
     <span>Intuition passive <b>13</b></span>
@@ -170,6 +172,7 @@ body.holy-shake{animation:holyShake .4s cubic-bezier(.36,.07,.19,.97) both}
   <div class="skills-grid" id="socialSkills"></div>
 </div>
 
+<div class="subpane" data-subgroup-pane="social" data-subpane="info"><div class="card social-reference"><div class="title">Infos utiles</div><div class="social-refgrid"><span>Maîtrise <b>+4</b></span><span>Initiative <b>−1</b></span><span>Vitesse <b>9 m</b></span><span>DD sorts <b>16</b></span><span>Att. sort <b>+8</b></span><span>CA <b>20</b></span><span>PV max <b>84</b></span></div><p class="meta">Serment de Conquête · Flamme d’Argent. Les JdS incluent déjà l’Aura de protection (+4).</p></div></div>
 <div class="subpane" data-subgroup-pane="social" data-subpane="inventory">
   <div class="card inventory-add">
     <div class="title">Inventaire simple</div>
@@ -247,7 +250,7 @@ function doSocialRoll(label,bonus){
   if(bonus===''||bonus==null||!Number.isFinite(Number(bonus))){ribbon('Renseigne d’abord le bonus de '+label);return}
   var r=rollD20(S.socialRollMode||'normal'),b=Number(bonus),total=r.roll+b;
   addLog('Jet social • '+label,(S.socialRollMode==='adv'?'Avantage':S.socialRollMode==='dis'?'Désavantage':'Normal')+' • d20 '+r.detail+' '+signed(b)+' = '+total,'social');
-  ribbon(label+' : '+total+' ('+r.detail+' '+signed(b)+')');
+  ribbon(label+' : '+total+' ('+r.detail+' '+signed(b)+')');window.CompanionSocialDice?.show({label,dice:r.detail.includes(' / ')?r.detail.split(' / ').map(Number):Number(r.detail),bonus:b,total,mode:S.socialRollMode});
 }
 function setSubtab(group,name){
   var tabs=document.querySelectorAll('[data-subgroup="'+group+'"][data-subtab]');
@@ -299,5 +302,5 @@ function render(){if($('hpTop'))$('hpTop').textContent=S.hp+'/'+S.maxHp;if($('ac
 function bind(){bindSubtabs();var nav=document.querySelectorAll('[data-nav]');for(var i=0;i<nav.length;i++)nav[i].addEventListener('click',function(){showScreen(this.getAttribute('data-nav'))});$('ecoA').addEventListener('click',function(){toggleEco('a')});$('ecoB').addEventListener('click',function(){toggleEco('b')});$('ecoR').addEventListener('click',function(){toggleEco('r')});$('ecoM').addEventListener('click',function(){toggleEco('m')});$('nextTurn').addEventListener('click',nextTurn);$('rollModeBtn').addEventListener('click',function(){S.rollMode=S.rollMode==='auto'?'manual':'auto';render()});$('hpMinus').addEventListener('click',function(){hpAdjust('damage')});$('hpPlus').addEventListener('click',function(){hpAdjust('heal')});$('tempMinus').addEventListener('click',function(){tempAdjust('remove')});$('tempPlus').addEventListener('click',function(){tempAdjust('add')});var dec=document.querySelectorAll('[data-slot-dec]');for(i=0;i<dec.length;i++)dec[i].addEventListener('click',function(){changeSlot(Number(this.getAttribute('data-slot-dec')),-1)});var inc=document.querySelectorAll('[data-slot-inc]');for(i=0;i<inc.length;i++)inc[i].addEventListener('click',function(){changeSlot(Number(this.getAttribute('data-slot-inc')),1)});$('shortRest').addEventListener('click',shortRest);$('longRest').addEventListener('click',longRest);$('clearConc').addEventListener('click',clearConc);$('attackBtn').addEventListener('click',attack);$('guidedBtn').addEventListener('click',guided);var ds=document.querySelectorAll('.smite');for(i=0;i<ds.length;i++)ds[i].addEventListener('click',function(){divineSmite(Number(this.getAttribute('data-level')))});$('spellSmiteSelect').addEventListener('change',updateSmiteLevels);$('armSpellSmite').addEventListener('click',armSpellSmite);$('cancelSpellSmite').addEventListener('click',cancelSpellSmite);$('arrowStrike').addEventListener('click',function(){silverArrow('strike')});$('arrowSacrifice').addEventListener('click',function(){silverArrow('sacrifice')});$('presenceBtn').addEventListener('click',presence);$('protectBtn').addEventListener('click',function(){useReaction('Protection')});$('hellishBtn').addEventListener('click',hellish);var de=document.querySelectorAll('.decree');for(i=0;i<de.length;i++)de[i].addEventListener('click',function(){decree(this.getAttribute('data-order'))});var casts=document.querySelectorAll('.cast');for(i=0;i<casts.length;i++)casts[i].addEventListener('click',function(){cast(this.getAttribute('data-name'),Number(this.getAttribute('data-level')),this.getAttribute('data-eco'),this.getAttribute('data-conc')==='1')});var ups=document.querySelectorAll('.upcast');for(i=0;i<ups.length;i++)ups[i].addEventListener('click',function(){castSelected(this)});$('healBtn').addEventListener('click',healPrompt);$('senseBtn').addEventListener('click',function(){spend('sense',1,'Sens divin')});$('anchorBtn').addEventListener('click',anchor);$('binahResistBtn').addEventListener('click',chooseBinahResist);$('binahMueBtn').addEventListener('click',useBinahMue);$('binahChromaticBtn').addEventListener('click',useBinahChromatic);$('binahWallBtn').addEventListener('click',useBinahWall);var sm=document.querySelectorAll('[data-social-mode]');for(i=0;i<sm.length;i++)sm[i].addEventListener('click',function(){S.socialRollMode=this.getAttribute('data-social-mode');renderSocial();save()});$('invAdd').addEventListener('click',inventoryAdd);$('invName').addEventListener('keydown',function(e){if(e.key==='Enter')inventoryAdd()});$('undoLog').addEventListener('click',undoLast);$('clearLog').addEventListener('click',function(){snapshotForUndo();S.log=[];render()});$('ribbon').addEventListener('click',function(){clearTimeout(window._rt);$('ribbon').classList.remove('show')})}window.__CompanionBridge={id:'zephyr',name:'Zéphyr',maxHp:84,read:()=>S,ac:()=>S.conc==='Bouclier de la foi'?22:20,ecoKeys:{action:'a',bonus:'b',reaction:'r',movement:'m'},inventory:()=>S.inventory,resources:s=>({slots:s.slots,layOnHands:s.lay,channel:s.channel,arrows:s.arrows,binahChromatic:s.binahChromatic,binahWall:s.binahWall}),statuses:s=>[s.spellSmite?'châtiment armé':null,s.guidedReady?'frappe guidée':null,s.mark?'marque':null].filter(Boolean),custom:s=>({binah:{resistance:s.binahResist,chromatic:s.binahChromatic,wall:s.binahWall},spellSmite:s.spellSmite,guidedReady:s.guidedReady}),pending:()=>document.querySelector('#hitModal.show')?{roll:document.querySelector('#hitRoll')?.textContent}:null,lastHit:()=>window.__lastAttackHit??null,commands:{damage:n=>{snapshotForUndo();let d=applyDamage(n);addLog('PV modifiés',n+' dégâts • '+d.temp+' PV temp absorbés • '+d.hp+' PV perdus','resource')},heal:n=>{snapshotForUndo();let h=healSelf(n);addLog('PV modifiés','+'+h+' PV','resource')},setHP:n=>{snapshotForUndo();S.hp=Math.min(S.maxHp,n);addLog('PV fixés',S.hp+'/'+S.maxHp,'resource')},setTemporaryHP:n=>{snapshotForUndo();S.tempHp=n;addLog('PV temporaires',n+' PV temporaires','resource')},setResource:(k,v)=>{if(!['lay','sense','channel','decree','anchor','arrows','binahChromatic','binahWall'].includes(k)&&!/^slot[1-3]$/.test(k))throw Error('Ressource inconnue');snapshotForUndo();if(k.startsWith('slot'))S.slots[k.slice(4)]=Math.min(S.maxSlots[k.slice(4)],v);else S[k]=v;addLog('Ressource ajustée',k+' : '+v,'resource')},changeResource:(k,d)=>window.__CompanionBridge.commands.setResource(k,Math.max(0,(k.startsWith('slot')?S.slots[k.slice(4)]:S[k])+d)),setRollMode:m=>{if(!['normal','manual'].includes(m))throw Error('Mode indisponible');S.rollMode=m==='manual'?'manual':'auto';render()},nextTurn,clearConcentration:clearConc,setConcentration:name=>{snapshotForUndo();S.conc=String(name||'');addLog('Concentration',S.conc,'resource')},addInventoryItem:item=>{snapshotForUndo();S.inventory.push({id:Date.now().toString(36),name:String(item.name),qty:Math.max(0,Number(item.qty??1)),note:String(item.note||'')});addLog('Inventaire','Objet ajouté : '+item.name,'resource')},updateInventory:item=>{let i=S.inventory.find(x=>x.id===item.id);if(!i)throw Error('Objet inconnu');snapshotForUndo();Object.assign(i,{qty:Math.max(0,Number(item.qty??i.qty)),note:String(item.note??i.note)});addLog('Inventaire','Objet modifié : '+i.name,'resource')},removeInventoryItem:id=>inventoryRemove(id),applyHitDecision:hit=>{if(!pendingHitResolver)throw Error('Aucune attaque en attente');pendingHitResolver(hit)},undo:undoLast}};
 function init(){load();updateSmiteLevels();bind();render();showScreen('combat')}if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();})();
 </script>
-<script src="companion-api.js?v=1"></script></body>
+<script src="companion-api.js?v=1"></script><script src="social-dice.js?v=1"></script></body>
 </html>
