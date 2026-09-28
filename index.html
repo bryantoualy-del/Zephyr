@@ -75,16 +75,16 @@ body.holy-shake{animation:holyShake .4s cubic-bezier(.36,.07,.19,.97) both}
 .subtab{flex:1;min-height:40px;border:1px solid #39424d;background:#10151b;color:#9ca7b4;border-radius:10px;font-weight:850;font-size:11px}
 .subtab.active{border-color:#9a793f;color:#ffe1a2;background:linear-gradient(180deg,#342711,#1d170d);box-shadow:inset 0 0 0 1px rgba(229,184,95,.12)}
 .subpane{display:none}.subpane.active{display:block}
-.social-modebar{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin:2px 0 9px}.social-modebar.compact{display:block}
+.social-modebar{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin:2px 0 9px}.sticky-rollmode{position:sticky;top:254px;z-index:21;padding:6px;background:rgba(7,8,11,.95);backdrop-filter:blur(12px);border:1px solid #303945;border-radius:12px;box-shadow:0 8px 20px rgba(0,0,0,.22)}
 .social-mode{min-height:38px;border:1px solid #3f4955;border-radius:10px;background:#11161d;color:#b7c0cb;font-weight:800;font-size:11px}
 .social-mode.active{border-color:#be944d;color:#ffe3a7;background:#30230f}
 .social-reference{border-color:#665333}.social-refgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin:9px 0}.social-refgrid span{border:1px solid #3d4652;border-radius:10px;background:#0d1116;padding:8px;text-align:center;font-size:10px;color:var(--muted)}.social-refgrid b{display:block;color:#f7ddb0;font-size:17px;margin-top:2px}
-.ability-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}.ability-card{border:1px solid #39434f;border-radius:14px;background:linear-gradient(180deg,#171c23,#101419);padding:10px}.ability-head{display:flex;justify-content:space-between;align-items:center;gap:8px}.ability-head b{font-size:14px}.ability-abbr{font-size:10px;color:#d6b779;letter-spacing:.08em;font-weight:900}.ability-fields{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:8px}.ability-fields label{font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}.ability-fields input{width:100%;min-height:38px;margin-top:4px;border:1px solid #46515d;border-radius:9px;background:#0b0f14;color:#fff;padding:7px;text-align:center;font-weight:800}.ability-rolls{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:7px}.ability-rolls button,.skill-roll{min-height:38px;border:1px solid #4b5662;border-radius:9px;background:#181e25;color:#f2eee7;font-size:10px;font-weight:800}
-.skills-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px}.skill-card{display:grid;grid-template-columns:1fr 68px 74px;gap:6px;align-items:center;border:1px solid #37414c;border-radius:12px;background:#11161c;padding:8px}.skill-name b{display:block;font-size:11px}.skill-name small{color:var(--muted);font-size:9px}.skill-card input{width:100%;min-height:36px;border:1px solid #46515d;border-radius:8px;background:#090d12;color:#fff;text-align:center;font-weight:800}
+.ability-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}.ability-card{border:1px solid #39434f;border-radius:14px;background:linear-gradient(180deg,#171c23,#101419);padding:10px}.ability-head{display:flex;justify-content:space-between;align-items:center;gap:8px}.ability-head b{font-size:14px}.ability-abbr{font-size:10px;color:#d6b779;letter-spacing:.08em;font-weight:900}.ability-values{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:8px}.ability-value{border:1px solid #46515d;border-radius:9px;background:#0b0f14;padding:7px;text-align:center}.ability-value small{display:block;font-size:8px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}.ability-value b{display:block;font-size:15px;margin-top:2px}.ability-rolls{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:7px}.ability-rolls button,.skill-roll{min-height:38px;border:1px solid #4b5662;border-radius:9px;background:#181e25;color:#f2eee7;font-size:10px;font-weight:800}
+.passive-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin:0 0 9px}.passive-strip span{border:1px solid #39434f;border-radius:10px;background:#0d1217;padding:8px;text-align:center;font-size:9px;color:var(--muted)}.passive-strip b{display:block;color:#f3dfb9;font-size:16px;margin-top:2px}.skills-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px}.skill-card{display:grid;grid-template-columns:1fr 54px 74px;gap:6px;align-items:center;border:1px solid #37414c;border-radius:12px;background:#11161c;padding:8px}.skill-card.mastered{border-color:#665334;background:linear-gradient(180deg,#181814,#101419)}.skill-name b{display:block;font-size:11px}.skill-name small{color:var(--muted);font-size:9px}.skill-bonus-static{font-weight:900;text-align:center;color:#f2eee7}.mastery-mark{color:#e5b85f;font-weight:900;margin-left:4px}
 .inventory-form{display:grid;grid-template-columns:1.25fr 64px 1.5fr auto;gap:6px;margin-top:10px}.inventory-form input{min-width:0;min-height:42px;border:1px solid #46515d;border-radius:9px;background:#0b0f14;color:#fff;padding:8px}.inventory-form .btn{min-height:42px}
 .inventory-list{display:grid;gap:7px}.inventory-empty{border:1px dashed #39434d;border-radius:13px;padding:18px;text-align:center;color:#7f8995;font-size:11px}.inventory-item{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;border:1px solid #38424d;border-radius:13px;background:linear-gradient(180deg,#151a20,#0e1217);padding:10px}.inventory-item-name{font-weight:850}.inventory-item-note{font-size:10px;color:var(--muted);margin-top:3px;line-height:1.35}.inventory-item-actions{display:flex;gap:4px;align-items:center}.inventory-item-actions button{min-width:32px;height:32px;border:1px solid #4a5561;border-radius:8px;background:#171d24;color:#fff;font-weight:900}.inventory-item-actions .remove{color:#f3b0ad;border-color:#694148}
-@media(max-width:390px){.subtabs{top:194px}.social-refgrid{grid-template-columns:1fr 1fr}.ability-grid,.skills-grid{grid-template-columns:1fr}.inventory-form{grid-template-columns:1fr 60px}.inventory-form #invNote{grid-column:1/-1}.inventory-form .btn{grid-column:1/-1}.skill-card{grid-template-columns:1fr 62px 68px}}
-@media(min-width:700px){.subtabs{top:196px}.ability-grid{grid-template-columns:repeat(3,1fr)}.skills-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:390px){.subtabs{top:194px}.sticky-rollmode{top:250px}.social-refgrid{grid-template-columns:1fr 1fr}.passive-strip{grid-template-columns:1fr 1fr 1fr}.ability-grid,.skills-grid{grid-template-columns:1fr}.inventory-form{grid-template-columns:1fr 60px}.inventory-form #invNote{grid-column:1/-1}.inventory-form .btn{grid-column:1/-1}.skill-card{grid-template-columns:1fr 62px 68px}}
+@media(min-width:700px){.subtabs{top:196px}.sticky-rollmode{top:254px}.ability-grid{grid-template-columns:repeat(3,1fr)}.skills-grid{grid-template-columns:repeat(2,1fr)}}
 
 </style>
 </head>
@@ -142,22 +142,27 @@ body.holy-shake{animation:holyShake .4s cubic-bezier(.36,.07,.19,.97) both}
   <button class="subtab" type="button" data-subgroup="social" data-subtab="inventory">Inventaire</button>
 </div>
 
+<div class="social-modebar sticky-rollmode" aria-label="Mode de jet social">
+  <button class="social-mode active" type="button" data-social-mode="normal">Normal</button>
+  <button class="social-mode" type="button" data-social-mode="adv">Avantage</button>
+  <button class="social-mode" type="button" data-social-mode="dis">Désavantage</button>
+</div>
+
 <div class="subpane active" data-subgroup-pane="social" data-subpane="abilities">
-  <div class="social-modebar" aria-label="Mode de jet social">
-    <button class="social-mode active" type="button" data-social-mode="normal">Normal</button>
-    <button class="social-mode" type="button" data-social-mode="adv">Avantage</button>
-    <button class="social-mode" type="button" data-social-mode="dis">Désavantage</button>
-  </div>
   <div class="card social-reference">
     <div class="title">Repères de Zéphyr</div>
-    <div class="social-refgrid"><span>CA <b>20</b></span><span>PV <b>84</b></span><span>DD sorts <b>16</b></span><span>Att. sort <b>+8</b></span></div>
-    <div class="meta">Les caractéristiques et maîtrises détaillées ne sont pas inscrites dans le repo actuel : renseigne-les une fois depuis la fiche, elles restent sauvegardées sur cet appareil.</div>
+    <div class="social-refgrid"><span>Maîtrise <b>+4</b></span><span>Initiative <b>−1</b></span><span>Vitesse <b>9 m</b></span><span>DD sorts <b>16</b></span><span>Att. sort <b>+8</b></span><span>CA <b>20</b></span><span>PV <b>84</b></span><span>CHA <b>19 · +4</b></span></div>
+    <div class="meta">Les JDS ci-dessous sont ceux de la fiche et incluent déjà l’Aura de protection de Zéphyr (+4).</div>
   </div>
   <div class="ability-grid" id="socialAbilities"></div>
 </div>
 
 <div class="subpane" data-subgroup-pane="social" data-subpane="skills">
-  <div class="social-modebar compact" aria-hidden="true"><span class="meta">Le mode de jet choisi dans Carac & JDS s’applique aussi ici.</span></div>
+  <div class="passive-strip">
+    <span>Perception passive <b>9</b></span>
+    <span>Intuition passive <b>13</b></span>
+    <span>Investigation passive <b>9</b></span>
+  </div>
   <div class="skills-grid" id="socialSkills"></div>
 </div>
 
@@ -216,14 +221,18 @@ function hellish(){var l=Number($('hellishLevel').value);if(!useEco('r','Réacti
 function spend(res,n,label){if(S[res]<n){ribbon(label+' indisponible');return}S[res]-=n;addLog(label,'1 utilisation dépensée.','resource')}function anchor(){if(S.anchor<=0){ribbon('Ancre sacrée déjà utilisée');return}S.anchor--;addLog('Ancre sacrée','Dégâts de l’attaque divisés par 2 • alliés à 9 m : +14 PV.','power')}function healPrompt(){var n=Number(prompt('Combien de PV rendre ?',10));if(!isFinite(n)||n<=0||n>S.lay)return;S.lay-=n;addLog('Imposition des mains',n+' PV dépensés de la réserve.','resource')}function resetTurnAfterRest(){S.turn=1;S.dmg=0;S.attackCount=0;S.lastHit=null;S.eco={a:false,b:false,r:false,m:false};S.guidedReady=false}function shortRest(){S.channel=1;resetTurnAfterRest();addLog('Repos court','Conduit divin récupéré • compteur de tours et économie d’action réinitialisés.','rest')}function longRest(){S.hp=84;S.maxHp=84;S.tempHp=0;S.slots={1:4,2:3,3:2};S.lay=50;S.sense=5;S.channel=1;S.decree=1;S.anchor=1;S.arrows=3;S.binahChromatic=3;S.binahWall=1;S.mark=false;S.conc='';S.spellSmite=null;resetTurnAfterRest();addLog('Repos long','PV, slots, flèches et ressources restaurés • tours réinitialisés • Marque dissipée après prière.','rest')}
 function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
 var SOCIAL_ABILITIES=[
-  {key:'str',abbr:'FOR',name:'Force'},{key:'dex',abbr:'DEX',name:'Dextérité'},{key:'con',abbr:'CON',name:'Constitution'},
-  {key:'int',abbr:'INT',name:'Intelligence'},{key:'wis',abbr:'SAG',name:'Sagesse'},{key:'cha',abbr:'CHA',name:'Charisme'}
+  {key:'str',abbr:'FOR',name:'Force',score:25,mod:7,save:11,saveProf:false},
+  {key:'dex',abbr:'DEX',name:'Dextérité',score:8,mod:-1,save:3,saveProf:false},
+  {key:'con',abbr:'CON',name:'Constitution',score:15,mod:2,save:6,saveProf:false},
+  {key:'int',abbr:'INT',name:'Intelligence',score:9,mod:-1,save:3,saveProf:false},
+  {key:'wis',abbr:'SAG',name:'Sagesse',score:8,mod:-1,save:7,saveProf:true},
+  {key:'cha',abbr:'CHA',name:'Charisme',score:19,mod:4,save:12,saveProf:true}
 ];
 var SOCIAL_SKILLS=[
-  ['athletics','Athlétisme','FOR'],['acrobatics','Acrobaties','DEX'],['sleight','Escamotage','DEX'],['stealth','Discrétion','DEX'],
-  ['arcana','Arcanes','INT'],['history','Histoire','INT'],['investigation','Investigation','INT'],['nature','Nature','INT'],['religion','Religion','INT'],
-  ['animal','Dressage','SAG'],['insight','Intuition','SAG'],['medicine','Médecine','SAG'],['perception','Perception','SAG'],['survival','Survie','SAG'],
-  ['deception','Tromperie','CHA'],['intimidation','Intimidation','CHA'],['performance','Représentation','CHA'],['persuasion','Persuasion','CHA']
+  ['athletics','Athlétisme','FOR',7,false],['acrobatics','Acrobaties','DEX',-1,false],['sleight','Escamotage','DEX',-1,false],['stealth','Discrétion','DEX',-1,false],
+  ['arcana','Arcanes','INT',-1,false],['history','Histoire','INT',-1,false],['investigation','Investigation','INT',-1,false],['nature','Nature','INT',-1,false],['religion','Religion','INT',3,true],
+  ['animal','Dressage','SAG',-1,false],['insight','Intuition','SAG',3,true],['medicine','Médecine','SAG',-1,false],['perception','Perception','SAG',-1,false],['survival','Survie','SAG',-1,false],
+  ['deception','Tromperie','CHA',4,false],['intimidation','Intimidation','CHA',8,true],['performance','Représentation','CHA',4,false],['persuasion','Persuasion','CHA',8,true]
 ];
 function socialMod(score){var n=Number(score);return Number.isFinite(n)&&String(score).trim()!==''?Math.floor((n-10)/2):null}
 function signed(n){return n==null?'—':(n>=0?'+':'')+n}
@@ -246,23 +255,19 @@ function bindSubtabs(){
 }
 function renderSocial(){
   var box=$('socialAbilities');if(box){
-    var h='';for(var i=0;i<SOCIAL_ABILITIES.length;i++){var a=SOCIAL_ABILITIES[i],v=S.social.abilities[a.key]||{score:'',save:''},mod=socialMod(v.score);
-      h+='<div class="ability-card"><div class="ability-head"><div><span class="ability-abbr">'+a.abbr+'</span><b>'+a.name+'</b></div><strong>'+signed(mod)+'</strong></div>'+
-      '<div class="ability-fields"><label>Score<input class="social-score" data-ability="'+a.key+'" type="number" min="1" max="30" value="'+esc(v.score)+'" placeholder="—"></label>'+
-      '<label>JDS<input class="social-save" data-ability="'+a.key+'" type="number" min="-20" max="30" value="'+esc(v.save)+'" placeholder="bonus"></label></div>'+
-      '<div class="ability-rolls"><button type="button" class="ability-test" data-ability="'+a.key+'">Test '+signed(mod)+'</button><button type="button" class="save-test" data-ability="'+a.key+'">JDS '+(v.save===''?'—':signed(Number(v.save)))+'</button></div></div>';
+    var h='';for(var i=0;i<SOCIAL_ABILITIES.length;i++){var a=SOCIAL_ABILITIES[i];
+      h+='<div class="ability-card"><div class="ability-head"><div><span class="ability-abbr">'+a.abbr+'</span><b>'+a.name+'</b></div><strong>'+signed(a.mod)+'</strong></div>'+
+      '<div class="ability-values"><div class="ability-value"><small>Score</small><b>'+a.score+(a.key==='str'?'*':'')+'</b></div><div class="ability-value"><small>JDS'+(a.saveProf?' • maîtrise':'')+'</small><b>'+signed(a.save)+'</b></div></div>'+
+      '<div class="ability-rolls"><button type="button" class="ability-test" data-ability="'+a.key+'">Test '+signed(a.mod)+'</button><button type="button" class="save-test" data-ability="'+a.key+'">JDS '+signed(a.save)+'</button></div></div>';
     }box.innerHTML=h;
-    var scores=box.querySelectorAll('.social-score');for(i=0;i<scores.length;i++)scores[i].addEventListener('change',function(){S.social.abilities[this.getAttribute('data-ability')].score=this.value;save();renderSocial()});
-    var saves=box.querySelectorAll('.social-save');for(i=0;i<saves.length;i++)saves[i].addEventListener('change',function(){S.social.abilities[this.getAttribute('data-ability')].save=this.value;save();renderSocial()});
-    var at=box.querySelectorAll('.ability-test');for(i=0;i<at.length;i++)at[i].addEventListener('click',function(){var k=this.getAttribute('data-ability'),a=SOCIAL_ABILITIES.find(function(x){return x.key===k});doSocialRoll(a.name,socialMod(S.social.abilities[k].score))});
-    var sv=box.querySelectorAll('.save-test');for(i=0;i<sv.length;i++)sv[i].addEventListener('click',function(){var k=this.getAttribute('data-ability'),a=SOCIAL_ABILITIES.find(function(x){return x.key===k});doSocialRoll('JDS '+a.abbr,S.social.abilities[k].save)});
+    var at=box.querySelectorAll('.ability-test');for(i=0;i<at.length;i++)at[i].addEventListener('click',function(){var k=this.getAttribute('data-ability'),a=SOCIAL_ABILITIES.find(function(x){return x.key===k});doSocialRoll(a.name,a.mod)});
+    var sv=box.querySelectorAll('.save-test');for(i=0;i<sv.length;i++)sv[i].addEventListener('click',function(){var k=this.getAttribute('data-ability'),a=SOCIAL_ABILITIES.find(function(x){return x.key===k});doSocialRoll('JDS '+a.abbr,a.save)});
   }
   var skills=$('socialSkills');if(skills){
-    var sh='';for(var j=0;j<SOCIAL_SKILLS.length;j++){var s=SOCIAL_SKILLS[j],val=S.social.skills[s[0]]==null?'':S.social.skills[s[0]];
-      sh+='<div class="skill-card"><div class="skill-name"><b>'+s[1]+'</b><small>'+s[2]+'</small></div><input class="skill-bonus" data-skill="'+s[0]+'" type="number" min="-20" max="30" value="'+esc(val)+'" placeholder="bonus"><button class="skill-roll" type="button" data-skill="'+s[0]+'">Jeter</button></div>';
+    var sh='';for(var j=0;j<SOCIAL_SKILLS.length;j++){var s=SOCIAL_SKILLS[j];
+      sh+='<div class="skill-card '+(s[4]?'mastered':'')+'"><div class="skill-name"><b>'+s[1]+(s[4]?'<span class="mastery-mark">◆</span>':'')+'</b><small>'+s[2]+(s[4]?' • maîtrise':'')+'</small></div><div class="skill-bonus-static">'+signed(s[3])+'</div><button class="skill-roll" type="button" data-skill="'+s[0]+'">Jeter</button></div>';
     }skills.innerHTML=sh;
-    var sb=skills.querySelectorAll('.skill-bonus');for(j=0;j<sb.length;j++)sb[j].addEventListener('change',function(){S.social.skills[this.getAttribute('data-skill')]=this.value;save()});
-    var sr=skills.querySelectorAll('.skill-roll');for(j=0;j<sr.length;j++)sr[j].addEventListener('click',function(){var k=this.getAttribute('data-skill'),s=SOCIAL_SKILLS.find(function(x){return x[0]===k});doSocialRoll(s[1],S.social.skills[k])});
+    var sr=skills.querySelectorAll('.skill-roll');for(j=0;j<sr.length;j++)sr[j].addEventListener('click',function(){var k=this.getAttribute('data-skill'),s=SOCIAL_SKILLS.find(function(x){return x[0]===k});doSocialRoll(s[1],s[3])});
   }
   var modes=document.querySelectorAll('[data-social-mode]');for(var m=0;m<modes.length;m++)modes[m].classList.toggle('active',modes[m].getAttribute('data-social-mode')===(S.socialRollMode||'normal'));
 }
