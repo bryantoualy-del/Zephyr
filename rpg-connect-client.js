@@ -12,7 +12,7 @@
  const cleanTarget=t=>({id:String(t?.id??''),name:String(t?.name||'Cible'),creatureType:String(t?.creatureType||t?.type||'unknown').toLowerCase(),boss:!!t?.boss,elite:!!t?.elite,hp:t?.hp??null,status:String(t?.status||'')});
  const selectedTarget=()=>targets.find(t=>t.id===selectedTargetId)||null;
  const saveTargets=()=>{try{localStorage.setItem(storeKey+':targets',JSON.stringify({targets,selectedTargetId}))}catch{}};
- const iconFor=t=>window.RPGConnectIcons?.creature(t.creatureType)||'';
+ const iconFor=t=>window.RPGConnectIcons?.creature(t.creatureType,t.boss)||'';
  function renderTargets(){
    if(!targets.length){targetBlock.hidden=true;activeTargetNode.hidden=true;targetList.innerHTML='';return}
    targetBlock.hidden=false;
