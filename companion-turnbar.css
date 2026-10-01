@@ -49,3 +49,49 @@
   #cc-turnbar-standard .cc-turn-label{font-size:10px}
   #cc-turnbar-standard .cc-turn-state{font-size:8px}
 }
+
+/* Zéphyr mobile — same turn controls, compact 2 x 5 layout */
+@media (max-width:699px){
+  #cc-turnbar-standard{
+    position:sticky;top:0;z-index:42;
+    width:100%;margin:0;padding:5px 7px 6px;
+    display:grid;grid-template-columns:repeat(5,minmax(0,1fr));
+    gap:4px;align-items:stretch;
+    border-width:1px 0;border-style:solid;
+    border-color:var(--cc-turn-border,rgba(125,142,164,.42));
+    border-radius:0;background:var(--cc-turn-bg,rgba(8,10,13,.97));
+    box-shadow:0 8px 18px rgba(0,0,0,.24);
+    backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+    color:var(--cc-turn-fg,inherit);font-family:inherit;
+  }
+  #cc-turnbar-standard .cc-turn-cell{
+    min-width:0;height:38px;padding:3px 2px;
+    border:1px solid var(--cc-cell-border,rgba(130,145,160,.34));
+    border-radius:8px;background:var(--cc-cell-bg,rgba(255,255,255,.035));
+    color:inherit;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    text-align:center;overflow:hidden;white-space:nowrap;
+  }
+  #cc-turnbar-standard button.cc-turn-cell{cursor:pointer;font:inherit}
+  #cc-turnbar-standard .cc-turn-icon{font-size:10px;line-height:1;font-weight:900}
+  #cc-turnbar-standard .cc-turn-label{font-size:8.5px;line-height:1.02;font-weight:850;margin-top:2px;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+  #cc-turnbar-standard .cc-turn-state{font-size:6.8px;line-height:1.02;opacity:.68;margin-top:1px;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+  #cc-turnbar-standard .cc-turn-round .cc-turn-label{font-size:9px}
+  #cc-turnbar-standard .cc-turn-round .cc-turn-state{font-size:6.7px}
+  #cc-turnbar-standard .cc-turn-next{font-weight:900;background:var(--cc-next-bg,var(--cc-cell-bg,rgba(255,255,255,.05)))}
+  #cc-turnbar-standard .cc-turn-rest .cc-turn-label{font-size:8px}
+  #cc-turnbar-standard .is-used{opacity:.48;filter:saturate(.55)}
+  #cc-turnbar-standard .is-active{border-color:var(--cc-active-border,currentColor)}
+  body.cc-turnbar-ready .hud .turnline,
+  body.cc-turnbar-ready .hud .hudtop{display:none!important}
+  body.cc-turnbar-ready .hud{
+    position:relative;top:auto;z-index:35;
+    padding-top:6px;border-top:0;
+  }
+  body.cc-turnbar-ready .hudrow{margin-top:0}
+}
+@media (max-width:390px){
+  #cc-turnbar-standard{padding-left:5px;padding-right:5px;gap:3px}
+  #cc-turnbar-standard .cc-turn-cell{height:36px}
+  #cc-turnbar-standard .cc-turn-label{font-size:8px}
+  #cc-turnbar-standard .cc-turn-state{font-size:6.3px}
+}
