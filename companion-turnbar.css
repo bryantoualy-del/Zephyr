@@ -102,3 +102,13 @@
 
 /* RPG-STRIP-HIDDEN-V1 */
 #rpg-state-strip[hidden]{display:none!important}
+
+/* ZEPHYR-STICKY-VITALS-V2
+   Vitals + spell slots stay visible; the turn bar itself scrolls normally below them. */
+body.cc-turnbar-ready .hud{
+  position:sticky!important;top:0!important;z-index:42!important;
+}
+body.cc-turnbar-ready #cc-turnbar-standard{
+  position:relative!important;top:auto!important;z-index:20!important;
+  border:0!important;box-shadow:none!important;
+}
