@@ -1,0 +1,53 @@
+/* Zephyr responsive polish + dedicated iPad layout v1 */
+*{min-width:0}
+button,input,select,textarea{touch-action:manipulation}
+img{max-width:100%}
+@media(max-width:699px){
+  .app{max-width:100%;overflow-x:hidden}
+  button,input,select,textarea{min-height:44px}
+  .navbtn{min-height:58px}
+  .card,.accordion,.resource,.skill-card,.inventory-item{overflow-wrap:anywhere}
+  .actions,.castrow,.smite-grid,.arrow-options{min-width:0}
+}
+@media(min-width:700px) and (max-width:1100px){
+  :root{--navh:0px}
+  body{padding:0;background:radial-gradient(circle at 50% -8%,rgba(229,184,95,.08),transparent 32rem),#080a0d}
+  .app{width:min(100%,1080px);max-width:1080px;margin:0 auto;padding:10px 12px 22px}
+  .top{border:1px solid #343b45;border-radius:16px 16px 0 0;padding:10px 16px;background:linear-gradient(180deg,#15191f,#0d1014)}
+  .brand{font-size:clamp(30px,5vw,44px)}
+  .sub{font-size:12px}
+  .zephyr-emblem{width:64px;height:64px}.brand-row::after{width:64px}
+  .hud{top:max(4px,env(safe-area-inset-top));margin:0 0 9px;padding:7px 8px;border:1px solid #39414c;border-radius:0 0 14px 14px}
+  .hudtop{grid-template-columns:220px minmax(0,1fr)}
+  .reststack{grid-template-columns:1fr 1fr}
+  .hudrow{grid-template-columns:1.4fr .9fr .75fr .75fr}
+  .vitalsbar{grid-template-columns:1fr 1fr}
+  .turnline{grid-template-columns:repeat(4,minmax(0,1fr)) minmax(110px,1.15fr)}
+  .hudbottom{grid-template-columns:minmax(0,1fr) auto}
+  .slotstrip{gap:7px}.slotmini{min-height:34px}
+  .content{padding:4px 0 12px}
+  .screen.active{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;align-items:start}
+  .screen>.section,.screen>.subtabs,.screen>.journal-head,.screen>.journal-tabs,.screen>#journalMechanical,.screen>#journalNotes,.screen>.binah-hero{grid-column:1/-1}
+  .card,.accordion{margin-bottom:0}
+  #combat .card{min-height:100%}
+  #arsenal .subpane.active,#social .subpane.active{grid-column:1/-1;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+  #arsenal .subpane.active>.card,#social .subpane.active>.card{margin-bottom:0}
+  #arsenal .subpane.active>.section,#social .subpane.active>.section{grid-column:1/-1}
+  .resourcegrid{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .ability-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .skills-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .social-refgrid{grid-template-columns:repeat(4,minmax(0,1fr))}
+  .inventory-form{grid-template-columns:1.25fr 72px 1.4fr auto}
+  .nav{position:sticky;left:auto;right:auto;bottom:auto;top:174px;z-index:34;width:min(100%,1080px);height:auto;transform:none;margin:0 auto 10px;padding:6px 12px;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px;border:1px solid #343b45;border-radius:14px;background:rgba(8,10,13,.95);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+  .navbtn{min-height:48px;flex-direction:row;gap:7px;font-size:11px}
+  .navbtn .ico{font-size:17px}
+  .subtabs{top:238px}
+  .sticky-rollmode{top:294px}
+  #ribbon{bottom:18px;max-width:720px}
+  .journal-note-label textarea{min-height:320px}
+}
+@media(min-width:900px) and (max-width:1100px){
+  .app{padding-left:16px;padding-right:16px}
+  .screen.active{gap:12px}
+  .card{padding:15px}
+}
