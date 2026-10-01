@@ -5,6 +5,8 @@ img{max-width:100%}
 @media(max-width:699px){
   .app{max-width:100%;overflow-x:hidden}
   button,input,select,textarea{min-height:44px}
+  .slotmini button{width:22px!important;height:22px!important;min-width:22px!important;min-height:22px!important;flex:0 0 22px;padding:0!important;border-radius:50%!important;line-height:20px!important}
+  .slotmini{min-height:32px}
   .navbtn{min-height:58px}
   .card,.accordion,.resource,.skill-card,.inventory-item{overflow-wrap:anywhere}
   .actions,.castrow,.smite-grid,.arrow-options{min-width:0}
@@ -38,11 +40,11 @@ img{max-width:100%}
   .skills-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
   .social-refgrid{grid-template-columns:repeat(4,minmax(0,1fr))}
   .inventory-form{grid-template-columns:1.25fr 72px 1.4fr auto}
-  .nav{position:sticky;left:auto;right:auto;bottom:auto;top:174px;z-index:34;width:min(100%,1080px);height:auto;transform:none;margin:0 auto 10px;padding:6px 12px;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px;border:1px solid #343b45;border-radius:14px;background:rgba(8,10,13,.95);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+  .nav{position:sticky;left:auto;right:auto;bottom:auto;top:calc(var(--zephyr-hud-h,180px) + 6px);z-index:34;width:100%;height:auto;transform:none;margin:0 0 10px;padding:6px 8px;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px;border:1px solid #343b45;border-radius:14px;background:rgba(8,10,13,.95);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
   .navbtn{min-height:48px;flex-direction:row;gap:7px;font-size:11px}
   .navbtn .ico{font-size:17px}
-  .subtabs{top:238px}
-  .sticky-rollmode{top:294px}
+  .subtabs{top:calc(var(--zephyr-hud-h,180px) + var(--zephyr-nav-h,60px) + 12px)}
+  .sticky-rollmode{top:calc(var(--zephyr-hud-h,180px) + var(--zephyr-nav-h,60px) + 66px)}
   #ribbon{bottom:18px;max-width:720px}
   .journal-note-label textarea{min-height:320px}
 }
