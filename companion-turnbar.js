@@ -40,7 +40,8 @@ function boot(){
  const short=cell('cc-turn-rest','☕','Court','');
  const long=cell('cc-turn-rest','☾','Long','');
  [round,action,bonus,reaction,move,damage,conc,next,short,long].forEach(x=>bar.appendChild(x));
- nativeBar.parentNode.insertBefore(bar,nativeBar);
+ if(id()==='zephyr'&&window.matchMedia('(max-width:699px)').matches)nativeBar.insertAdjacentElement('afterend',bar);
+ else nativeBar.parentNode.insertBefore(bar,nativeBar);
  document.body.classList.add('cc-turnbar-ready');
  try{
   const cs=getComputedStyle(nativeBar), sample=get(cfg.action)||nativeBar, ss=getComputedStyle(sample), ns=getComputedStyle(get(cfg.next)||sample);
