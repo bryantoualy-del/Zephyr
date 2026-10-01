@@ -99,3 +99,6 @@
 /* RPG Connect is visually absent while offline. The launcher remains available. */
 .rpg-session-banner[data-tone="offline"],
 #rpg-state-strip[hidden]{display:none!important}
+
+/* RPG-STRIP-HIDDEN-V1 */
+#rpg-state-strip[hidden]{display:none!important}
