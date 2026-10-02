@@ -11,7 +11,7 @@ img{max-width:100%}
   .card,.accordion,.resource,.skill-card,.inventory-item{overflow-wrap:anywhere}
   .actions,.castrow,.smite-grid,.arrow-options{min-width:0}
 }
-@media(min-width:700px) and (max-width:1100px){
+@media (min-width:768px) and (max-width:1366px) and (min-height:700px){
   :root{--navh:0px}
   body{padding:0;background:radial-gradient(circle at 50% -8%,rgba(229,184,95,.08),transparent 32rem),#080a0d}
   .app{width:min(100%,1080px);max-width:1080px;margin:0 auto;padding:10px 12px 22px}
@@ -48,7 +48,7 @@ img{max-width:100%}
   #ribbon{bottom:18px;max-width:720px}
   .journal-note-label textarea{min-height:320px}
 }
-@media(min-width:900px) and (max-width:1100px){
+@media (min-width:980px) and (max-width:1366px) and (min-height:700px){
   .app{padding-left:16px;padding-right:16px}
   .screen.active{gap:12px}
   .card{padding:15px}
@@ -59,7 +59,7 @@ img{max-width:100%}
   Tablet-only pass inspired by Brack/Rufus density.
   IMPORTANT: phone rules (<=767px) are intentionally untouched.
 */
-@media (min-width:768px) and (max-width:1100px){
+@media (min-width:768px) and (max-width:1366px) and (min-height:700px){
   :root{--navh:0px}
 
   body{
@@ -282,7 +282,7 @@ img{max-width:100%}
   .journal-note-label textarea{min-height:300px}
 }
 
-@media (min-width:980px) and (max-width:1100px){
+@media (min-width:980px) and (max-width:1366px) and (min-height:700px){
   .app{padding-left:16px;padding-right:16px}
   .hud{gap:7px 9px}
   .screen.active{gap:12px 14px}
