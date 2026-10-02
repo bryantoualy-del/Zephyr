@@ -53,3 +53,238 @@ img{max-width:100%}
   .screen.active{gap:12px}
   .card{padding:15px}
 }
+
+/* ===== Zephyr dedicated iPad composition v2 ===== */
+/*
+  Tablet-only pass inspired by Brack/Rufus density.
+  IMPORTANT: phone rules (<=767px) are intentionally untouched.
+*/
+@media (min-width:768px) and (max-width:1100px){
+  :root{--navh:0px}
+
+  body{
+    padding-bottom:0;
+    background:
+      radial-gradient(circle at 12% -10%,rgba(255,130,65,.09),transparent 30rem),
+      radial-gradient(circle at 88% -8%,rgba(229,184,95,.08),transparent 28rem),
+      #080a0d;
+  }
+
+  .app{
+    width:min(100%,1080px);
+    max-width:1080px;
+    min-height:100vh;
+    margin:0 auto;
+    padding:10px 14px 28px;
+  }
+
+  /* Identity: keep Zephyr's visual identity, but give it a cleaner tablet proportion. */
+  .top{
+    margin:0;
+    padding:10px 18px 9px;
+    border:1px solid #343b45;
+    border-bottom:0;
+    border-radius:16px 16px 0 0;
+    background:
+      radial-gradient(circle at 88% 10%,rgba(229,184,95,.08),transparent 34%),
+      linear-gradient(180deg,#15191f,#0d1014);
+  }
+  .brand{font-size:clamp(31px,4vw,42px);line-height:1;letter-spacing:.11em}
+  .sub{font-size:11px;margin-top:4px}
+  .zephyr-emblem{width:58px;height:58px}
+  .brand-row::after{width:58px}
+
+  /*
+    Brack/Rufus-style tablet HUD:
+    two compact rows plus the slot/mode strip instead of one tall mobile stack.
+  */
+  .hud{
+    position:sticky;
+    top:max(4px,env(safe-area-inset-top));
+    z-index:55;
+    display:grid;
+    grid-template-columns:repeat(12,minmax(0,1fr));
+    gap:6px 8px;
+    margin:0 0 8px;
+    padding:7px 8px;
+    border:1px solid #39414c;
+    border-radius:0 0 14px 14px;
+    background:rgba(8,10,13,.975);
+    box-shadow:0 8px 20px rgba(0,0,0,.24);
+  }
+
+  .hudtop{
+    grid-column:1 / span 5;
+    grid-row:1;
+    grid-template-columns:minmax(150px,.9fr) minmax(0,1.15fr);
+    gap:6px;
+    margin:0;
+  }
+  .reststack{grid-template-columns:1fr 1fr;gap:5px}
+  .restbtn{min-height:36px;padding:4px 6px}
+  .concchip{min-height:36px;padding:4px 7px}
+
+  .hudrow{
+    grid-column:6 / -1;
+    grid-row:1;
+    grid-template-columns:1.35fr .9fr .8fr .8fr;
+    gap:5px;
+    margin:0;
+  }
+  .chip{min-height:36px;padding:4px}
+
+  .vitalsbar{
+    grid-column:1 / span 4;
+    grid-row:2;
+    grid-template-columns:1fr 1fr;
+    gap:5px;
+    margin:0;
+  }
+  .vitalctl{min-height:36px;padding:3px 4px}
+
+  .turnline{
+    grid-column:5 / -1;
+    grid-row:2;
+    grid-template-columns:repeat(4,minmax(0,1fr)) minmax(104px,1.15fr);
+    gap:5px;
+    margin:0;
+  }
+  .eco,.next{min-height:36px}
+
+  .hudbottom{
+    grid-column:1 / -1;
+    grid-row:3;
+    grid-template-columns:minmax(0,1fr) auto;
+    gap:8px;
+    margin:0;
+    padding-top:1px;
+  }
+  .slotstrip{
+    display:grid;
+    grid-template-columns:repeat(4,minmax(0,1fr));
+    gap:6px;
+  }
+  .slotmini{
+    min-height:32px;
+    justify-content:center;
+    padding:3px 5px;
+  }
+  .rollmode{min-height:32px}
+
+  /* One clean tablet nav row, visually close to Brack/Rufus. */
+  .nav{
+    position:sticky;
+    left:auto;
+    right:auto;
+    bottom:auto;
+    top:calc(var(--zephyr-hud-h,152px) + 6px);
+    z-index:45;
+    width:100%;
+    height:auto;
+    margin:0 0 10px;
+    padding:5px 6px;
+    grid-template-columns:repeat(5,minmax(0,1fr));
+    gap:5px;
+    border:1px solid #343b45;
+    border-radius:13px;
+    background:rgba(8,10,13,.955);
+    backdrop-filter:blur(14px);
+    -webkit-backdrop-filter:blur(14px);
+    box-shadow:0 6px 18px rgba(0,0,0,.18);
+  }
+  .navbtn{
+    min-height:44px;
+    padding:5px 7px;
+    flex-direction:row;
+    gap:7px;
+    font-size:11px;
+  }
+  .navbtn .ico{font-size:17px}
+
+  /* Main tablet canvas: two useful columns, not stretched mobile cards. */
+  .content{padding:2px 0 12px}
+  .screen.active{
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:10px 12px;
+    align-items:start;
+  }
+  .screen>.section,
+  .screen>.subtabs,
+  .screen>.journal-head,
+  .screen>.journal-tabs,
+  .screen>#journalMechanical,
+  .screen>#journalNotes,
+  .screen>.binah-hero{
+    grid-column:1/-1;
+  }
+
+  .section{margin:8px 3px 3px}
+  .card,.accordion{
+    margin-bottom:0;
+    border-radius:14px;
+  }
+  .card{padding:12px}
+  #combat .card{min-height:0}
+  .title{font-size:15px}
+  .meta{font-size:11px}
+  .actions{gap:7px;margin-top:8px}
+  .btn{min-height:44px;padding:7px}
+
+  /* Resource-heavy views use the width of the iPad instead of stacking too early. */
+  .resourcegrid{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+  .ability-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+  .skills-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+  .social-refgrid{grid-template-columns:repeat(4,minmax(0,1fr));gap:7px}
+
+  #arsenal .subpane.active,
+  #social .subpane.active{
+    grid-column:1/-1;
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:10px 12px;
+    align-items:start;
+  }
+  #arsenal .subpane.active>.section,
+  #social .subpane.active>.section{
+    grid-column:1/-1;
+  }
+  #arsenal .subpane.active>.card,
+  #social .subpane.active>.card{
+    margin-bottom:0;
+  }
+
+  .inventory-form{
+    grid-template-columns:minmax(0,1.25fr) 72px minmax(0,1.4fr) auto;
+    gap:7px;
+  }
+
+  /* Sticky secondary controls stay under HUD + nav without covering cards. */
+  .subtabs{
+    top:calc(var(--zephyr-hud-h,152px) + var(--zephyr-nav-h,56px) + 12px);
+    z-index:40;
+  }
+  .sticky-rollmode{
+    top:calc(var(--zephyr-hud-h,152px) + var(--zephyr-nav-h,56px) + 62px);
+    z-index:39;
+  }
+
+  #ribbon{
+    left:50%;
+    right:auto;
+    width:min(720px,calc(100% - 32px));
+    max-width:720px;
+    bottom:18px;
+    transform:translate(-50%,150%);
+  }
+  #ribbon.show{transform:translate(-50%,0)}
+
+  .journal-note-label textarea{min-height:300px}
+}
+
+@media (min-width:980px) and (max-width:1100px){
+  .app{padding-left:16px;padding-right:16px}
+  .hud{gap:7px 9px}
+  .screen.active{gap:12px 14px}
+  .card{padding:14px}
+}
