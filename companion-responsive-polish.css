@@ -1,212 +1,240 @@
-/* Zephyr responsive polish + dedicated iPad layout v1 */
+/* Zephyr responsive polish v4
+   Phone portrait keeps the existing mobile UX.
+   iPad landscape gets a dedicated Brack-inspired composition. */
 *{min-width:0}
 button,input,select,textarea{touch-action:manipulation}
 img{max-width:100%}
+
+/* Mobile: deliberately preserve the existing portrait-first layout. */
 @media(max-width:699px){
   .app{max-width:100%;overflow-x:hidden}
   button,input,select,textarea{min-height:44px}
-  .slotmini button{width:22px!important;height:22px!important;min-width:22px!important;min-height:22px!important;flex:0 0 22px;padding:0!important;border-radius:50%!important;line-height:20px!important}
+  .slotmini button{
+    width:22px!important;height:22px!important;min-width:22px!important;min-height:22px!important;
+    flex:0 0 22px;padding:0!important;border-radius:50%!important;line-height:20px!important
+  }
   .slotmini{min-height:32px}
   .navbtn{min-height:58px}
   .card,.accordion,.resource,.skill-card,.inventory-item{overflow-wrap:anywhere}
   .actions,.castrow,.smite-grid,.arrow-options{min-width:0}
 }
-@media (min-width:768px) and (max-width:1366px) and (min-height:700px){
-  :root{--navh:0px}
-  body{padding:0;background:radial-gradient(circle at 50% -8%,rgba(229,184,95,.08),transparent 32rem),#080a0d}
-  .app{width:min(100%,1080px);max-width:1080px;margin:0 auto;padding:10px 12px 22px}
-  .top{border:1px solid #343b45;border-radius:16px 16px 0 0;padding:10px 16px;background:linear-gradient(180deg,#15191f,#0d1014)}
-  .brand{font-size:clamp(30px,5vw,44px)}
-  .sub{font-size:12px}
-  .zephyr-emblem{width:64px;height:64px}.brand-row::after{width:64px}
-  .hud{top:max(4px,env(safe-area-inset-top));margin:0 0 9px;padding:7px 8px;border:1px solid #39414c;border-radius:0 0 14px 14px}
-  .hudtop{grid-template-columns:220px minmax(0,1fr)}
-  .reststack{grid-template-columns:1fr 1fr}
-  .hudrow{grid-template-columns:1.4fr .9fr .75fr .75fr}
-  .vitalsbar{grid-template-columns:1fr 1fr}
-  .turnline{grid-template-columns:repeat(4,minmax(0,1fr)) minmax(110px,1.15fr)}
-  .hudbottom{grid-template-columns:minmax(0,1fr) auto}
-  .slotstrip{gap:7px}.slotmini{min-height:34px}
-  .content{padding:4px 0 12px}
-  .screen.active{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;align-items:start}
-  .screen>.section,.screen>.subtabs,.screen>.journal-head,.screen>.journal-tabs,.screen>#journalMechanical,.screen>#journalNotes,.screen>.binah-hero{grid-column:1/-1}
-  .card,.accordion{margin-bottom:0}
-  #combat .card{min-height:100%}
-  #arsenal .subpane.active,#social .subpane.active{grid-column:1/-1;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
-  #arsenal .subpane.active>.card,#social .subpane.active>.card{margin-bottom:0}
-  #arsenal .subpane.active>.section,#social .subpane.active>.section{grid-column:1/-1}
-  .resourcegrid{grid-template-columns:repeat(3,minmax(0,1fr))}
-  .ability-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
-  .skills-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .social-refgrid{grid-template-columns:repeat(4,minmax(0,1fr))}
-  .inventory-form{grid-template-columns:1.25fr 72px 1.4fr auto}
-  .nav{position:sticky;left:auto;right:auto;bottom:auto;top:calc(var(--zephyr-hud-h,180px) + 6px);z-index:34;width:100%;height:auto;transform:none;margin:0 0 10px;padding:6px 8px;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px;border:1px solid #343b45;border-radius:14px;background:rgba(8,10,13,.95);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
-  .navbtn{min-height:48px;flex-direction:row;gap:7px;font-size:11px}
-  .navbtn .ico{font-size:17px}
-  .subtabs{top:calc(var(--zephyr-hud-h,180px) + var(--zephyr-nav-h,60px) + 12px)}
-  .sticky-rollmode{top:calc(var(--zephyr-hud-h,180px) + var(--zephyr-nav-h,60px) + 66px)}
-  #ribbon{bottom:18px;max-width:720px}
-  .journal-note-label textarea{min-height:320px}
-}
-@media (min-width:980px) and (max-width:1366px) and (min-height:700px){
-  .app{padding-left:16px;padding-right:16px}
-  .screen.active{gap:12px}
-  .card{padding:15px}
-}
 
-/* ===== Zephyr dedicated iPad composition v2 ===== */
-/*
-  Tablet-only pass inspired by Brack/Rufus density.
-  IMPORTANT: phone rules (<=767px) are intentionally untouched.
-*/
-@media (min-width:768px) and (max-width:1366px) and (min-height:700px){
+/* iPad landscape — real tablet canvas, based on Brack's geometry. */
+@media (min-width:768px) and (max-width:1366px) and (min-height:600px) and (orientation:landscape){
   :root{--navh:0px}
-
+  html,body{overflow-x:hidden}
   body{
     padding-bottom:0;
     background:
-      radial-gradient(circle at 12% -10%,rgba(255,130,65,.09),transparent 30rem),
-      radial-gradient(circle at 88% -8%,rgba(229,184,95,.08),transparent 28rem),
+      radial-gradient(circle at 10% -12%,rgba(255,130,65,.09),transparent 30rem),
+      radial-gradient(circle at 90% -10%,rgba(229,184,95,.08),transparent 30rem),
       #080a0d;
   }
 
+  /* Brack-like desktop/tablet skeleton:
+     identity left, vitals right, then turnbar, nav and full-width workspace. */
   .app{
-    width:min(100%,1080px);
-    max-width:1080px;
+    width:100%;
+    max-width:1366px;
     min-height:100vh;
     margin:0 auto;
-    padding:10px 14px 28px;
+    padding:10px 12px 28px;
+    display:grid;
+    grid-template-columns:minmax(300px,1.08fr) minmax(0,1.92fr);
+    grid-template-rows:auto auto auto auto 1fr;
+    gap:8px 10px;
+    align-items:stretch;
   }
 
-  /* Identity: keep Zephyr's visual identity, but give it a cleaner tablet proportion. */
   .top{
+    grid-column:1;
+    grid-row:1;
     margin:0;
-    padding:10px 18px 9px;
+    min-height:118px;
+    padding:14px 92px 14px 16px;
+    position:relative;
+    display:flex;
+    flex-direction:column;
+    align-items:flex-start;
+    justify-content:center;
+    text-align:left;
+    overflow:hidden;
     border:1px solid #343b45;
-    border-bottom:0;
-    border-radius:16px 16px 0 0;
+    border-radius:16px;
     background:
-      radial-gradient(circle at 88% 10%,rgba(229,184,95,.08),transparent 34%),
-      linear-gradient(180deg,#15191f,#0d1014);
+      radial-gradient(circle at 88% 20%,rgba(229,184,95,.10),transparent 36%),
+      linear-gradient(145deg,#171a20,#0d1014);
+    box-shadow:0 10px 28px rgba(0,0,0,.22);
   }
-  .brand{font-size:clamp(31px,4vw,42px);line-height:1;letter-spacing:.11em}
-  .sub{font-size:11px;margin-top:4px}
-  .zephyr-emblem{width:58px;height:58px}
-  .brand-row::after{width:58px}
+  .company-kicker{margin:0 0 5px;font-size:10px;letter-spacing:.15em}
+  .brand-row{justify-content:flex-start;gap:10px}
+  .brand-row::after{display:none}
+  .brand{font-size:clamp(29px,3.3vw,41px);line-height:1;letter-spacing:.10em}
+  .sub{margin-top:6px;font-size:11px;line-height:1.3;max-width:260px}
+  .zephyr-emblem{
+    position:absolute;
+    right:14px;
+    top:50%;
+    width:70px;
+    height:70px;
+    transform:translateY(-50%);
+    filter:drop-shadow(0 0 12px #e5b85f55)
+  }
 
-  /*
-    Brack/Rufus-style tablet HUD:
-    two compact rows plus the slot/mode strip instead of one tall mobile stack.
-  */
+  /* Native Zephyr HUD becomes Brack's right-hand vitals panel. */
+  body.cc-turnbar-ready .hud,
   .hud{
-    position:sticky;
-    top:max(4px,env(safe-area-inset-top));
-    z-index:55;
+    grid-column:2;
+    grid-row:1;
+    position:relative!important;
+    top:auto!important;
+    z-index:20!important;
+    min-height:118px;
+    margin:0;
+    padding:9px;
     display:grid;
     grid-template-columns:repeat(12,minmax(0,1fr));
-    gap:6px 8px;
-    margin:0 0 8px;
-    padding:7px 8px;
-    border:1px solid #39414c;
-    border-radius:0 0 14px 14px;
-    background:rgba(8,10,13,.975);
-    box-shadow:0 8px 20px rgba(0,0,0,.24);
+    gap:6px 7px;
+    align-content:center;
+    border:1px solid #343b45;
+    border-radius:16px;
+    background:linear-gradient(145deg,#171a20,#0d1014);
+    box-shadow:0 10px 28px rgba(0,0,0,.22);
+    backdrop-filter:none;
+    -webkit-backdrop-filter:none;
   }
-
   .hudtop{
-    grid-column:1 / span 5;
+    grid-column:1/-1;
     grid-row:1;
-    grid-template-columns:minmax(150px,.9fr) minmax(0,1.15fr);
+    grid-template-columns:minmax(180px,.95fr) minmax(0,1.25fr);
     gap:6px;
     margin:0;
   }
   .reststack{grid-template-columns:1fr 1fr;gap:5px}
-  .restbtn{min-height:36px;padding:4px 6px}
-  .concchip{min-height:36px;padding:4px 7px}
-
+  .restbtn,.concchip{min-height:34px}
   .hudrow{
-    grid-column:6 / -1;
+    grid-column:1/-1;
     grid-row:1;
-    grid-template-columns:1.35fr .9fr .8fr .8fr;
-    gap:5px;
+    grid-template-columns:1.45fr .85fr .72fr .72fr;
+    gap:6px;
     margin:0;
   }
-  .chip{min-height:36px;padding:4px}
-
+  .chip{min-height:42px;padding:5px 6px}
+  .chip small{font-size:9px}.chip b{font-size:15px}
   .vitalsbar{
-    grid-column:1 / span 4;
+    grid-column:1 / span 7;
     grid-row:2;
-    grid-template-columns:1fr 1fr;
-    gap:5px;
+    grid-template-columns:1.45fr 1fr;
+    gap:6px;
     margin:0;
   }
-  .vitalctl{min-height:36px;padding:3px 4px}
-
-  .turnline{
-    grid-column:5 / -1;
-    grid-row:2;
-    grid-template-columns:repeat(4,minmax(0,1fr)) minmax(104px,1.15fr);
-    gap:5px;
-    margin:0;
-  }
-  .eco,.next{min-height:36px}
-
+  .vitalctl{min-height:39px;padding:4px 5px}
+  .vitalctl.hpquick button{min-width:58px}
   .hudbottom{
-    grid-column:1 / -1;
-    grid-row:3;
+    grid-column:8 / -1;
+    grid-row:2;
     grid-template-columns:minmax(0,1fr) auto;
-    gap:8px;
+    gap:6px;
+    align-items:stretch;
     margin:0;
-    padding-top:1px;
   }
   .slotstrip{
     display:grid;
-    grid-template-columns:repeat(4,minmax(0,1fr));
-    gap:6px;
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    gap:5px;
+    min-width:0;
   }
   .slotmini{
-    min-height:32px;
+    min-height:39px;
     justify-content:center;
     padding:3px 5px;
   }
-  .rollmode{min-height:32px}
+  .slotmini span{font-size:8px}
+  .slotmini b{font-size:10px;min-width:18px}
+  .slotmini button{width:18px;height:18px}
+  .rollmode{min-height:39px;padding:5px 9px}
 
-  /* One clean tablet nav row, visually close to Brack/Rufus. */
+  /* Native turn controls are hidden by the shared standard turnbar on tablet.
+     When JS has not booted yet, keep them compact and harmless. */
+  .turnline{
+    grid-column:1/-1;
+    grid-row:3;
+    grid-template-columns:repeat(4,minmax(0,1fr)) minmax(110px,1.1fr);
+    gap:5px;
+    margin:0;
+  }
+
+  /* Connected-state strip lives between header and turnbar without disturbing layout. */
+  .app>#rpg-state-strip{
+    grid-column:1/-1;
+    grid-row:2;
+    margin:0;
+  }
+
+  /* Shared standardized turnbar = Brack-style single landscape row. */
+  body.cc-turnbar-ready #cc-turnbar-standard,
+  #cc-turnbar-standard{
+    grid-column:1/-1;
+    grid-row:3;
+    position:sticky!important;
+    top:max(5px,env(safe-area-inset-top))!important;
+    z-index:60!important;
+    width:100%;
+    margin:0;
+    padding:6px 7px;
+    border:1px solid var(--cc-turn-border,rgba(125,142,164,.42))!important;
+    border-radius:12px!important;
+    box-shadow:0 8px 22px rgba(0,0,0,.24)!important;
+    backdrop-filter:blur(12px);
+    -webkit-backdrop-filter:blur(12px);
+  }
+
+  /* Horizontal section tabs, inside the app, directly under the turnbar. */
   .nav{
+    grid-column:1/-1;
+    grid-row:4;
     position:sticky;
     left:auto;
     right:auto;
     bottom:auto;
-    top:calc(var(--zephyr-hud-h,152px) + 6px);
-    z-index:45;
+    top:calc(max(5px,env(safe-area-inset-top)) + var(--zephyr-turnbar-h,60px) + 6px);
+    z-index:52;
     width:100%;
     height:auto;
-    margin:0 0 10px;
-    padding:5px 6px;
+    transform:none;
+    margin:0;
+    padding:5px;
     grid-template-columns:repeat(5,minmax(0,1fr));
-    gap:5px;
+    gap:6px;
     border:1px solid #343b45;
-    border-radius:13px;
+    border-radius:12px;
     background:rgba(8,10,13,.955);
-    backdrop-filter:blur(14px);
-    -webkit-backdrop-filter:blur(14px);
     box-shadow:0 6px 18px rgba(0,0,0,.18);
+    backdrop-filter:blur(12px);
+    -webkit-backdrop-filter:blur(12px);
   }
   .navbtn{
-    min-height:44px;
-    padding:5px 7px;
+    min-height:38px;
+    padding:5px 8px;
     flex-direction:row;
     gap:7px;
     font-size:11px;
+    border-radius:9px;
   }
-  .navbtn .ico{font-size:17px}
+  .navbtn .ico{font-size:15px}
 
-  /* Main tablet canvas: two useful columns, not stretched mobile cards. */
-  .content{padding:2px 0 12px}
+  .content{
+    grid-column:1/-1;
+    grid-row:5;
+    width:100%;
+    padding:2px 0 12px;
+  }
+
+  /* 12-column Brack-style workspace instead of two stretched mobile columns. */
   .screen.active{
     display:grid;
-    grid-template-columns:repeat(2,minmax(0,1fr));
-    gap:10px 12px;
+    grid-template-columns:repeat(12,minmax(0,1fr));
+    gap:10px;
     align-items:start;
   }
   .screen>.section,
@@ -215,58 +243,66 @@ img{max-width:100%}
   .screen>.journal-tabs,
   .screen>#journalMechanical,
   .screen>#journalNotes,
-  .screen>.binah-hero{
+  .screen>.binah-hero,
+  .screen>.social-modebar{
     grid-column:1/-1;
   }
 
-  .section{margin:8px 3px 3px}
+  .section{margin:7px 3px 1px}
   .card,.accordion{
     margin-bottom:0;
     border-radius:14px;
   }
   .card{padding:12px}
-  #combat .card{min-height:0}
-  .title{font-size:15px}
-  .meta{font-size:11px}
+  .title{font-size:15px}.meta{font-size:11px}
   .actions{gap:7px;margin-top:8px}
-  .btn{min-height:44px;padding:7px}
+  .btn{min-height:42px;padding:7px 8px}
 
-  /* Resource-heavy views use the width of the iPad instead of stacking too early. */
-  .resourcegrid{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
-  .ability-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
-  .skills-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
-  .social-refgrid{grid-template-columns:repeat(4,minmax(0,1fr));gap:7px}
+  /* Combat: main actions 8/12, tactical/smaller modules 4/12 — same principle as Brack. */
+  #combat>#attackCard{grid-column:1 / span 8}
+  #combat>#attackCard + .card{grid-column:9 / -1}
+  #combat>#spellSmiteCard{grid-column:1 / span 8}
+  #combat>.arrow-card{grid-column:9 / -1}
+  #combat .smite-grid{grid-template-columns:1fr 1fr}
+  #combat .actions.three{grid-template-columns:repeat(3,minmax(0,1fr))}
 
-  #arsenal .subpane.active,
-  #social .subpane.active{
+  /* Spells / powers exploit the landscape width. */
+  #arsenal>.subpane.active,
+  #social>.subpane.active{
     grid-column:1/-1;
     display:grid;
     grid-template-columns:repeat(2,minmax(0,1fr));
-    gap:10px 12px;
+    gap:10px;
     align-items:start;
   }
-  #arsenal .subpane.active>.section,
-  #social .subpane.active>.section{
+  #arsenal>.subpane.active>.section,
+  #social>.subpane.active>.section,
+  #social>.subpane.active>.passive-strip,
+  #social>.subpane.active>.inventory-list{
     grid-column:1/-1;
   }
-  #arsenal .subpane.active>.card,
-  #social .subpane.active>.card{
-    margin-bottom:0;
-  }
+  #arsenal>.subpane.active>.card,
+  #arsenal>.subpane.active>.accordion,
+  #social>.subpane.active>.card{margin-bottom:0}
 
-  .inventory-form{
-    grid-template-columns:minmax(0,1.25fr) 72px minmax(0,1.4fr) auto;
-    gap:7px;
-  }
+  .resourcegrid{grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+  .ability-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+  .skills-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+  .social-refgrid{grid-template-columns:repeat(4,minmax(0,1fr));gap:7px}
+  .inventory-form{grid-template-columns:minmax(0,1.2fr) 72px minmax(0,1.35fr) auto;gap:7px}
 
-  /* Sticky secondary controls stay under HUD + nav without covering cards. */
+  /* BINAH also becomes a real two-column tablet board. */
+  #binah>.card{grid-column:span 6}
+  #binah>.binah-note{grid-column:1/-1}
+
+  /* Secondary controls stick below turnbar + section nav. */
   .subtabs{
-    top:calc(var(--zephyr-hud-h,152px) + var(--zephyr-nav-h,56px) + 12px);
-    z-index:40;
+    top:calc(max(5px,env(safe-area-inset-top)) + var(--zephyr-turnbar-h,60px) + var(--zephyr-nav-h,50px) + 12px);
+    z-index:46;
   }
   .sticky-rollmode{
-    top:calc(var(--zephyr-hud-h,152px) + var(--zephyr-nav-h,56px) + 62px);
-    z-index:39;
+    top:calc(max(5px,env(safe-area-inset-top)) + var(--zephyr-turnbar-h,60px) + var(--zephyr-nav-h,50px) + 62px);
+    z-index:45;
   }
 
   #ribbon{
@@ -278,13 +314,13 @@ img{max-width:100%}
     transform:translate(-50%,150%);
   }
   #ribbon.show{transform:translate(-50%,0)}
-
   .journal-note-label textarea{min-height:300px}
 }
 
-@media (min-width:980px) and (max-width:1366px) and (min-height:700px){
-  .app{padding-left:16px;padding-right:16px}
-  .hud{gap:7px 9px}
-  .screen.active{gap:12px 14px}
+/* Slight extra breathing room on the large iPad Pro without changing the composition. */
+@media (min-width:1180px) and (max-width:1366px) and (min-height:700px) and (orientation:landscape){
+  .app{padding-left:16px;padding-right:16px;gap:9px 12px}
+  .top{padding-left:18px}
   .card{padding:14px}
+  .screen.active{gap:12px}
 }
