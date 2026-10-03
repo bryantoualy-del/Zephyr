@@ -13,14 +13,14 @@ function measure(){
   document.documentElement.style.setProperty('--zephyr-nav-h',nh+'px');
 }
 function scheduleMeasure(){
-  scheduleMeasure();
+  requestAnimationFrame(measure);
   setTimeout(measure,180);
   setTimeout(measure,700);
 }
 function apply(){
   if(mq.matches){
     if(nav.parentElement!==app)hud.insertAdjacentElement('afterend',nav);
-    requestAnimationFrame(measure);
+    scheduleMeasure();
   }else{
     if(nav.parentElement===app){
       if(originalNext&&originalNext.parentNode===app.parentNode)app.parentNode.insertBefore(nav,originalNext);
