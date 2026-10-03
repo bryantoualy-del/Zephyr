@@ -258,21 +258,33 @@ img{max-width:100%}
   .actions{gap:7px;margin-top:8px}
   .btn{min-height:42px;padding:7px 8px}
 
-  /* Combat: main actions 8/12, tactical/smaller modules 4/12 — same principle as Brack. */
+  /* Combat: two independent Brack-like columns.
+     This removes the vertical hole caused by the taller Divine Smite card. */
   #combat{row-gap:6px}
-  #combat>#attackCard{grid-column:1 / span 8}
-  #combat>#attackCard + .card{
+  #combat>.zephyr-combat-main-col{
+    grid-column:1 / span 8;
+  }
+  #combat>.zephyr-combat-side-col{
     grid-column:9 / -1;
+  }
+  #combat>.zephyr-combat-column{
+    display:flex;
+    flex-direction:column;
+    gap:7px;
+    min-width:0;
+    align-self:start;
+  }
+  #combat>.zephyr-combat-column>.card{
+    width:100%;
+    margin:0;
+  }
+  #combat>.zephyr-combat-side-col>.card:first-child{
     padding:10px 12px;
   }
-  #combat>#attackCard + .card .meta{line-height:1.25}
-  #combat>#attackCard + .card .actions{margin-top:6px}
-  #combat>#attackCard + .card .smite-state{margin-top:5px;padding:6px 8px}
-  #combat>#spellSmiteCard{
-    grid-column:1 / span 8;
-    margin-top:-8px;
-  }
-  #combat>.arrow-card{grid-column:9 / -1}
+  #combat>.zephyr-combat-side-col>.card:first-child .meta{line-height:1.22}
+  #combat>.zephyr-combat-side-col>.card:first-child .actions{margin-top:5px}
+  #combat>.zephyr-combat-side-col>.card:first-child .smite-state{margin-top:5px;padding:6px 8px}
+  #combat #spellSmiteCard{margin-top:0}
   #combat .smite-grid{grid-template-columns:1fr 1fr}
   #combat .actions.three{grid-template-columns:repeat(3,minmax(0,1fr))}
 
@@ -319,6 +331,26 @@ img{max-width:100%}
     min-height:36px;
     font-size:10px;
   }
+
+  /* Dice presentation controls are a compact horizontal utility row.
+     Previously they auto-flowed into one 1/12 grid cell and wrapped vertically. */
+  #social>.cc-dice-settings{
+    grid-column:1/-1;
+    display:flex;
+    flex-wrap:nowrap;
+    justify-content:flex-end;
+    align-items:center;
+    gap:5px;
+    width:100%;
+    margin:-2px 0 1px;
+    padding:0;
+  }
+  #social>.cc-dice-settings button{
+    min-height:28px!important;
+    padding:3px 7px!important;
+    font-size:9px!important;
+    white-space:nowrap;
+  }
   #social>.subpane.active>.section,
   #social>.subpane.active>.passive-strip,
   #social>.subpane.active>.skills-grid,
@@ -334,8 +366,8 @@ img{max-width:100%}
     margin:0;
   }
   #social .passive-strip span{
-    min-height:48px;
-    padding:6px 8px;
+    min-height:42px;
+    padding:5px 8px;
     display:flex;
     align-items:center;
     justify-content:space-between;
@@ -353,19 +385,22 @@ img{max-width:100%}
     gap:7px;
   }
   #social .skill-card{
-    min-height:52px;
-    grid-template-columns:minmax(0,1fr) 42px 62px;
-    gap:5px;
-    padding:6px 7px;
-    border-radius:11px;
-  }
-  #social .skill-name b{font-size:10.5px}
-  #social .skill-name small{font-size:8px}
-  #social .skill-bonus-static{font-size:13px}
-  #social .skill-roll{
-    min-height:34px;
+    min-height:44px;
+    grid-template-columns:minmax(0,1fr) 36px 48px;
+    gap:4px;
     padding:5px 7px;
-    font-size:9px;
+    border-radius:10px;
+  }
+  #social .skill-name b{font-size:10px}
+  #social .skill-name small{font-size:7.5px}
+  #social .skill-bonus-static{font-size:12px}
+  #social .skill-roll{
+    min-height:28px;
+    padding:3px 4px;
+    font-size:8px;
+    border-color:transparent;
+    background:transparent;
+    opacity:.78;
   }
   #social .social-reference{
     padding:10px 11px;
