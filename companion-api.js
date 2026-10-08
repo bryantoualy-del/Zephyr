@@ -77,7 +77,7 @@
       if(key&&!pendingKey){
         pendingId=pending.attackId||id();
         try{if(pending&&typeof pending==='object'&&!pending.attackId)pending.attackId=pendingId}catch{}
-        pendingDamageBaseline=Number(current?.turn?.damage)||0;
+        pendingDamageBaseline=Number(current?.turn?.damage)||0;window.__ZephyrExplicitDamage=!!pending.explicitDamage;
         const rawRoll=pending.total??pending.roll?.total??pending.roll??pending.attackTotal??pending.attack??null,numericRoll=(rawRoll!==null&&rawRoll!==''&&Number.isFinite(Number(rawRoll)))?Number(rawRoll):null;
         emit('attack:rolled',{attackId:pendingId,actor:pending.actor||bridge.id,attackKind:pending.attackKind||'spell',roll:numericRoll??rawRoll,total:numericRoll,nat:(()=>{const n=pending.nat??pending.roll?.nat??pending.roll?.raw??pending.roll?.d20;return n!=null&&Number.isFinite(Number(n))?Number(n):null})(),detail:pending.detail??pending.roll?.detail??'',crit:!!(pending.crit??pending.roll?.crit),name:pending.name??pending.label??pending.kind??'Attaque'},pendingId+':rolled');
         emit('attack:pending-hit',{attackId:pendingId,actor:pending.actor||bridge.id},pendingId+':pending');
@@ -87,7 +87,7 @@
         if(result!==null&&result!==undefined){
           const resolvedAttackId=pendingId,baseline=Number(pendingDamageBaseline)||0;
           lastResolvedAttackId=resolvedAttackId;emit(result?'attack:hit':'attack:miss',{attackId:resolvedAttackId,actor:bridge.id},resolvedAttackId+(result?':hit':':miss'));
-          if(result&&!bridge.emitsAttackDamage)damageWaiters.push({attackId:resolvedAttackId,baseline,at:Date.now()});
+          if(result&&!bridge.emitsAttackDamage&&!window.__ZephyrExplicitDamage)damageWaiters.push({attackId:resolvedAttackId,baseline,at:Date.now()});
           pendingId=null;pendingKey=null;pendingDamageBaseline=null;
         }
         else{
