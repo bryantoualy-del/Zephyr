@@ -277,8 +277,18 @@ function spendSlot(l){if(!S.slots[l]||S.slots[l]<=0){ribbon('Plus de slot N'+l);
  window.__ZephyrSpellEffect={key:s.key,name:def.name,level:s.level,concentrationInstance:window.CompanionAPI?.getState().concentrationInstance};
  window.__lastDamageComponents.push({amount:d.r.sum,type:d.type});S.dmg+=d.r.sum;S.spellSmite=null;if(S.conc===def.name&&s.key==='thunderous')S.conc='';spellFx(def.name,true);addLog(def.name+' déclenché',(crit?'CRITIQUE • ':'')+d.dice+'d'+d.die+' '+d.type+' = '+d.r.sum+' • '+effect+(saveEffect&&window.RPGConnect?.getStatus?.().controlled?' • JdS Encounter en attente':''),'smite');return d.r.sum
 }
+function zephyrCombatResult(tx,damages) {
+ const a=tx?.roll;if(!a)return false;
+ const rendered=window.CompanionResultFocus?.showStructured?.({
+   eventId:tx.attackId,title:'Poings de paladin — attaque '+tx.index+'/2',
+   attack:{dice:a.dice,mode:a.mode,bonus:11,extra:(a.guided||0)+(a.blessRoll||0),total:a.total,critical:a.nat===20},
+   damages:damages||[],potential:true
+ });
+ if(rendered){const ribbonNode=$('ribbon');ribbonNode?.classList.remove('show');clearTimeout(window._rt)}
+ return !!rendered;
+}
 async function finishZephyrAttack(tx){
- if(tx.phase==='hit'){var hit=await askHit('Poings de paladin',tx.roll);if(hit===null){S.rpgZephyrAttack=null;save();return}if(!hit){S.rpgZephyrAttack=null;S.lastHit=null;addLog('Poings • attaque '+tx.index+'/2','RATÉ • '+attackText(tx.roll,11),'attack');return}}
+ if(tx.phase==='hit'){var hit=await askHit('Poings de paladin',tx.roll);if(hit===null){S.rpgZephyrAttack=null;save();return}if(!hit){S.rpgZephyrAttack=null;S.lastHit=null;addLog('Poings • attaque '+tx.index+'/2','RATÉ • '+attackText(tx.roll,11),'attack');zephyrCombatResult(tx,[]);return}}
  if(tx.phase!=='smite')return;
  window.__CompanionResolvedAttackId=tx.attackId;
  window.RPGResources?.begin(tx.actionId,tx.before);
@@ -292,6 +302,16 @@ async function finishZephyrAttack(tx){
  window.__ZephyrSpellEffect=null;var extra=triggerSpellSmite(crit);impactFx();
  var hunt=window.ZephyrCombat.hunterDamage(tx);if(hunt){S.dmg+=hunt;window.__lastDamageComponents.push({amount:hunt,type:'contondants'})}
  addLog('Poings • attaque '+tx.index+'/2',(crit?'CRITIQUE • ':'')+attackText(tx.roll,11)+' • '+total+' contondants'+(extra?' • châtiment de sort +'+extra:''),crit?'crit':'attack');
+ const damageDetails=[{type:'contondants',amount:total,formula:(crit?'2d8':'1d8'),dice:d.a,bonus:7}];
+ for(const component of window.__lastDamageComponents.slice(1)){
+   const entry={type:component.type,amount:component.amount};
+   if(component.type==='radiants'&&typeof radiant!=='undefined'&&radiant&&component.amount===radiant.sum){
+     entry.formula=count+'d8';entry.dice=radiant.a;
+   }
+   damageDetails.push(entry);
+ }
+ zephyrCombatResult(tx,damageDetails);
+
  var payload={attackId:tx.attackId,actionId:tx.actionId,parentActionId:tx.actionId,targetId:tx.targetId,target:{id:tx.targetId,name:tx.targetName,creatureType:tx.targetType},combatId:tx.combatId,actor:'zephyr',amount:window.__lastDamageComponents.reduce((n,c)=>n+c.amount,0),components:window.__lastDamageComponents,spellEffect:window.__ZephyrSpellEffect,smiteDecision:{level:choice,critical:crit,fiend:!!tx.fiend}};
  S.rpgZephyrAttack=null;save();window.RPGUndo?.reserve(tx.actionId,tx.before);window.CompanionAPI?.sync();window.ZephyrCombat.submit(payload);render();
 }
