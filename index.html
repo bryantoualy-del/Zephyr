@@ -355,7 +355,7 @@ function doSocialRoll(label,bonus){
   if(bonus===''||bonus==null||!Number.isFinite(Number(bonus))){ribbon('Renseigne d’abord le bonus de '+label);return}
   var r=rollD20(S.socialRollMode||'normal'),b=Number(bonus),total=r.roll+b;
   addLog('Jet social • '+label,(S.socialRollMode==='adv'?'Avantage':S.socialRollMode==='dis'?'Désavantage':'Normal')+' • d20 '+r.detail+' '+signed(b)+' = '+total,'social');
-  ribbon(label+' : '+total+' ('+r.detail+' '+signed(b)+')');window.CompanionSocialDice?.show({label,dice:r.detail.includes(' / ')?r.detail.split(' / ').map(Number):Number(r.detail),bonus:b,total,mode:S.socialRollMode});
+  window.CompanionSocialDice?.show({label,dice:r.detail.includes(' / ')?r.detail.split(' / ').map(Number):Number(r.detail),bonus:b,total,mode:S.socialRollMode});
 }
 function setSubtab(group,name){
   var tabs=document.querySelectorAll('[data-subgroup="'+group+'"][data-subtab]');
