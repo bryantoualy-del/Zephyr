@@ -1,4 +1,4 @@
-/* Zephyr responsive polish v4
+/* Zephyr responsive polish v5
    Phone portrait keeps the existing mobile UX.
    iPad landscape gets a dedicated Brack-inspired composition. */
 *{min-width:0}
@@ -17,6 +17,34 @@ img{max-width:100%}
   .navbtn{min-height:58px}
   .card,.accordion,.resource,.skill-card,.inventory-item{overflow-wrap:anywhere}
   .actions,.castrow,.smite-grid,.arrow-options{min-width:0}
+}
+
+/* Tablet touch controls: preserve phone and desktop geometry. */
+@media (min-width:700px) and (max-width:1366px) and (min-height:600px){
+  .app button,.app input,.app select,.app summary,.navbtn{min-height:44px}
+  .app button,.app select{font-size:13px}
+  .slotmini{gap:5px;padding:5px 7px}
+  .slotmini span{font-size:11px}
+  .slotmini b{font-size:13px;min-width:24px}
+  .slotmini button{width:44px;height:44px;min-width:44px;flex:0 0 44px;line-height:1}
+  .vitalctl button{height:44px;min-width:44px}
+  .vitalctl span{font-size:11px}
+  .inventory-item-actions button{width:44px;height:44px}
+  #cc-turnbar-standard{grid-template-columns:repeat(5,minmax(0,1fr));gap:6px}
+  #cc-turnbar-standard .cc-turn-cell{height:auto;min-height:58px;padding:6px}
+  #cc-turnbar-standard .cc-turn-icon{font-size:14px}
+  #cc-turnbar-standard .cc-turn-label{font-size:12px;line-height:1.2;white-space:normal}
+  #cc-turnbar-standard .cc-turn-state{font-size:10px;line-height:1.2;white-space:normal}
+}
+@media (min-width:700px) and (max-width:1366px) and (min-height:600px) and (orientation:portrait){
+  .app{max-width:960px;padding:0 12px}
+  .nav{width:calc(100% - 24px);max-width:936px}
+  .hudbottom{grid-template-columns:minmax(0,1fr) auto}
+  .slotstrip{display:grid;grid-template-columns:repeat(3,minmax(0,1fr))}
+  .slotmini{justify-content:center}
+  .skills-grid,.ability-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .subtabs,.sticky-rollmode{position:relative;top:auto}
+  .skill-name b{font-size:13px}
 }
 
 /* iPad landscape — real tablet canvas, based on Brack's geometry. */
@@ -40,7 +68,7 @@ img{max-width:100%}
     margin:0 auto;
     padding:10px 12px 28px;
     display:grid;
-    grid-template-columns:minmax(300px,1.08fr) minmax(0,1.92fr);
+    grid-template-columns:minmax(250px,.8fr) minmax(0,2.2fr);
     grid-template-rows:auto auto auto auto 1fr;
     gap:8px 10px;
     align-items:stretch;
@@ -51,7 +79,7 @@ img{max-width:100%}
     grid-row:1;
     margin:0;
     min-height:118px;
-    padding:14px 92px 14px 16px;
+    padding:14px 16px;
     position:relative;
     display:flex;
     flex-direction:column;
@@ -69,15 +97,14 @@ img{max-width:100%}
   .company-kicker{margin:0 0 5px;font-size:10px;letter-spacing:.15em}
   .brand-row{justify-content:flex-start;gap:10px}
   .brand-row::after{display:none}
-  .brand{font-size:clamp(29px,3.3vw,41px);line-height:1;letter-spacing:.10em}
+  .brand{font-size:clamp(26px,2.8vw,36px);line-height:1;letter-spacing:.10em}
   .sub{margin-top:6px;font-size:11px;line-height:1.3;max-width:260px}
   .zephyr-emblem{
-    position:absolute;
-    right:14px;
-    top:50%;
-    width:70px;
-    height:70px;
-    transform:translateY(-50%);
+    position:static;
+    width:44px;
+    height:44px;
+    flex:none;
+    transform:none;
     filter:drop-shadow(0 0 12px #e5b85f55)
   }
 
@@ -122,7 +149,7 @@ img{max-width:100%}
   .chip{min-height:42px;padding:5px 6px}
   .chip small{font-size:9px}.chip b{font-size:15px}
   .vitalsbar{
-    grid-column:1 / span 7;
+    grid-column:1 / -1;
     grid-row:2;
     grid-template-columns:1.45fr 1fr;
     gap:6px;
@@ -131,8 +158,8 @@ img{max-width:100%}
   .vitalctl{min-height:39px;padding:4px 5px}
   .vitalctl.hpquick button{min-width:58px}
   .hudbottom{
-    grid-column:8 / -1;
-    grid-row:2;
+    grid-column:1 / -1;
+    grid-row:3;
     grid-template-columns:minmax(0,1fr) auto;
     gap:6px;
     align-items:stretch;
@@ -149,16 +176,16 @@ img{max-width:100%}
     justify-content:center;
     padding:3px 5px;
   }
-  .slotmini span{font-size:8px}
-  .slotmini b{font-size:10px;min-width:18px}
-  .slotmini button{width:18px;height:18px}
+  .slotmini span{font-size:11px}
+  .slotmini b{font-size:13px;min-width:24px}
+  .slotmini button{width:44px;height:44px}
   .rollmode{min-height:39px;padding:5px 9px}
 
   /* Native turn controls are hidden by the shared standard turnbar on tablet.
      When JS has not booted yet, keep them compact and harmless. */
   .turnline{
     grid-column:1/-1;
-    grid-row:3;
+    grid-row:4;
     grid-template-columns:repeat(4,minmax(0,1fr)) minmax(110px,1.1fr);
     gap:5px;
     margin:0;
@@ -214,11 +241,11 @@ img{max-width:100%}
     -webkit-backdrop-filter:blur(12px);
   }
   .navbtn{
-    min-height:38px;
-    padding:5px 8px;
+    min-height:44px;
+    padding:7px 8px;
     flex-direction:row;
     gap:7px;
-    font-size:11px;
+    font-size:13px;
     border-radius:9px;
   }
   .navbtn .ico{font-size:15px}
@@ -237,6 +264,8 @@ img{max-width:100%}
     gap:10px;
     align-items:start;
   }
+  .screen>.card,
+  .screen>.accordion,
   .screen>.section,
   .screen>.subtabs,
   .screen>.journal-head,
@@ -254,18 +283,18 @@ img{max-width:100%}
     border-radius:14px;
   }
   .card{padding:12px}
-  .title{font-size:15px}.meta{font-size:11px}
+  .title{font-size:17px}.meta{font-size:13px;line-height:1.4}
   .actions{gap:7px;margin-top:8px}
-  .btn{min-height:42px;padding:7px 8px}
+  .btn{min-height:48px;padding:9px 10px}
 
   /* Combat: two independent Brack-like columns.
      This removes the vertical hole caused by the taller Divine Smite card. */
   #combat{row-gap:6px}
   #combat>.zephyr-combat-main-col{
-    grid-column:1 / span 8;
+    grid-column:1 / span 7;
   }
   #combat>.zephyr-combat-side-col{
-    grid-column:9 / -1;
+    grid-column:8 / -1;
   }
   #combat>.zephyr-combat-column{
     display:flex;
@@ -309,18 +338,18 @@ img{max-width:100%}
 
   /* Social — Brack-like: compact controls, full-width roll board, no half-empty pane. */
   #social>.subtabs{
-    grid-column:1 / span 8;
+    grid-column:1 / span 7;
     margin:0;
     padding:4px;
     gap:5px;
   }
   #social>.subtabs .subtab{
-    min-height:36px;
-    padding:5px 8px;
-    font-size:10px;
+    min-height:44px;
+    padding:7px 8px;
+    font-size:12px;
   }
   #social>.social-modebar{
-    grid-column:9 / -1;
+    grid-column:8 / -1;
     align-self:start;
     margin:0;
     padding:4px;
@@ -328,8 +357,8 @@ img{max-width:100%}
     border-radius:11px;
   }
   #social>.social-modebar .social-mode{
-    min-height:36px;
-    font-size:10px;
+    min-height:44px;
+    font-size:12px;
   }
 
   /* Dice presentation controls are a compact horizontal utility row.
@@ -346,9 +375,9 @@ img{max-width:100%}
     padding:0;
   }
   #social>.cc-dice-settings button{
-    min-height:28px!important;
+    min-height:44px!important;
     padding:3px 7px!important;
-    font-size:9px!important;
+    font-size:12px!important;
     white-space:nowrap;
   }
   #social>.subpane.active>.section,
@@ -381,23 +410,23 @@ img{max-width:100%}
     flex:none;
   }
   #social .skills-grid{
-    grid-template-columns:repeat(3,minmax(0,1fr));
-    gap:7px;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:9px;
   }
   #social .skill-card{
     min-height:44px;
-    grid-template-columns:minmax(0,1fr) 36px 48px;
+    grid-template-columns:minmax(0,1fr) 44px 74px;
     gap:4px;
     padding:5px 7px;
     border-radius:10px;
   }
-  #social .skill-name b{font-size:10px}
-  #social .skill-name small{font-size:7.5px}
+  #social .skill-name b{font-size:13px}
+  #social .skill-name small{font-size:11px}
   #social .skill-bonus-static{font-size:12px}
   #social .skill-roll{
-    min-height:28px;
-    padding:3px 4px;
-    font-size:8px;
+    min-height:44px;
+    padding:6px 8px;
+    font-size:12px;
     border-color:transparent;
     background:transparent;
     opacity:.78;
@@ -407,7 +436,7 @@ img{max-width:100%}
   }
   #social .social-reference .title{font-size:13px}
   #social .social-refgrid{
-    grid-template-columns:repeat(8,minmax(0,1fr));
+    grid-template-columns:repeat(4,minmax(0,1fr));
     gap:5px;
     margin:7px 0 4px;
   }
@@ -418,7 +447,7 @@ img{max-width:100%}
     flex-direction:column;
     align-items:center;
     justify-content:center;
-    font-size:8px;
+    font-size:11px;
   }
   #social .social-refgrid b{
     margin-top:1px;
@@ -437,7 +466,7 @@ img{max-width:100%}
   #social .ability-value{padding:5px}
   #social .ability-value b{font-size:13px}
   #social .ability-rolls{gap:5px;margin-top:5px}
-  #social .ability-rolls button{min-height:34px;font-size:9px;padding:5px}
+  #social .ability-rolls button{min-height:44px;font-size:12px;padding:7px}
   #social .inventory-form{
     grid-template-columns:minmax(0,1.2fr) 72px minmax(0,1.35fr) auto;
     gap:7px;
@@ -448,6 +477,7 @@ img{max-width:100%}
     gap:7px;
   }
 
+  #arsenal>.subpane.active>.resourcegrid{grid-column:1/-1}
   .resourcegrid{grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
   .inventory-form{grid-template-columns:minmax(0,1.2fr) 72px minmax(0,1.35fr) auto;gap:7px}
 
@@ -483,4 +513,13 @@ img{max-width:100%}
   .top{padding-left:18px}
   .card{padding:14px}
   .screen.active{gap:12px}
+}
+
+
+/* Smaller landscape tablets need the roll mode below the slot controls. */
+@media (min-width:768px) and (max-width:1000px) and (min-height:600px) and (orientation:landscape){
+  .hudbottom{grid-template-columns:minmax(0,1fr)}
+  .rollmode{justify-self:end}
+  #social>.subtabs,#social>.social-modebar{grid-column:1/-1}
+  .resourcegrid{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
