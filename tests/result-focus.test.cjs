@@ -66,3 +66,14 @@ test('structured actual dice, typed mixed damage, one display per event, social 
  assert.equal(card.children[2].children[0].children[1].textContent,'24');
  assert.equal(card.children[2].children[1].children[1].textContent,'11');
 });
+
+test('Zéphyr social d20 uses historical animation without ribbon double result',()=>{
+ const html=fs.readFileSync(path.join(root,'index.html'),'utf8');
+ const start=html.indexOf('function doSocialRoll(');
+ const end=html.indexOf('function setSubtab(',start);
+ assert.ok(start>=0&&end>start);
+ const social=html.slice(start,end);
+ assert.match(social,/CompanionSocialDice\?\.show/);
+ assert.match(social,/addLog\('Jet social/);
+ assert.doesNotMatch(social,/ribbon\(label\+' : '\+total/);
+});
