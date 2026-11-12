@@ -79,13 +79,13 @@ test('Zéphyr social d20 uses historical animation without ribbon double result'
  assert.doesNotMatch(social,/ribbon\(label\+' : '\+total/);
 });
 
-test('Zephyr paladin action uses actual d20, fist and smite dice while preserving network submission',()=>{
+test('Zephyr paladin action uses actual d20, gauntlet and smite dice while preserving network submission',()=>{
  const html=fs.readFileSync(path.join(root,'index.html'),'utf8');
  const scripts=[...html.matchAll(/<script([^>]*)>([\s\S]*?)<\/script>/gi)].filter(x=>!x[1].includes('src=')&&!x[1].includes('module'));
  for(const [,attributes,code] of scripts)new vm.Script(code,{filename:'Zephyr inline'+attributes});
- assert.match(html,/eventId:tx\.attackId,title:'Poings de paladin/);
- assert.match(html,/attack:\{dice:a\.dice,mode:a\.mode,bonus:11/);
- assert.match(html,/formula:\(crit\?'2d8':'1d8'\),dice:d\.a,bonus:7/);
+ assert.match(html,/eventId:tx\.attackId,title:'Gantelets de Pierre du Titan/);
+ assert.match(html,/attack:\{dice:a\.dice,mode:a\.mode,bonus:13/);
+ assert.match(html,/formula:\(weaponDice\*\(crit\?2:1\)\)\+'d8',dice:d\.a,bonus:7/);
  assert.match(html,/entry\.dice=radiant\.a/);
  assert.match(html,/window\.ZephyrCombat\.submit\(payload\)/);
  assert.match(html,/ribbonNode\?\.classList\.remove\('show'\)/);
