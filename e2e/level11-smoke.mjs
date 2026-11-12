@@ -19,11 +19,11 @@ try{
   const page=await browser.newPage({viewport:{width,height:820}});
   const errors=[];page.on('pageerror',e=>errors.push(e.message));
   await page.goto(base);await page.waitForFunction(()=>window.__CompanionBridge?.read);
-  const initial=await page.evaluate(()=>{const s=window.__CompanionBridge.read();return{hp:s.hp,max:s.maxHp,lay:s.lay,slot3:s.slots[3],ac:window.__CompanionBridge.ac()}});
+  const initial=await page.evaluate(()=>{const s=window.__CompanionBridge.read();return{hp:s.hp,max:s.maxHp,lay:s.lay,slot3:s.slots[3],ac:window.__CompanionBridge.ac(s)}});
   assert.deepEqual(initial,{hp:92,max:92,lay:55,slot3:3,ac:20});
   await page.evaluate(()=>{const s=structuredClone(window.__CompanionBridge.read());s.hp=50;s.maxHp=84;s.lay=50;s.slots[3]=2;localStorage.setItem('zephyr-mobile-v20',JSON.stringify(s))});
   await page.reload();await page.waitForFunction(()=>window.__CompanionBridge?.read);
-  const migrated=await page.evaluate(()=>{const s=window.__CompanionBridge.read();return{hp:s.hp,max:s.maxHp,lay:s.lay,slot3:s.slots[3],ac:window.__CompanionBridge.ac()}});
+  const migrated=await page.evaluate(()=>{const s=window.__CompanionBridge.read();return{hp:s.hp,max:s.maxHp,lay:s.lay,slot3:s.slots[3],ac:window.__CompanionBridge.ac(s)}});
   assert.deepEqual(migrated,{hp:58,max:92,lay:55,slot3:3,ac:20});
   assert.deepEqual(errors,[],'no browser runtime errors');
   await page.close();
