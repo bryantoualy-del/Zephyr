@@ -3,14 +3,105 @@
  const d=document.createElement('dialog');d.id='zephyrDivineSmite';d.innerHTML='<div class="smite-halo">⚔</div><strong data-verdict></strong><h2>✦ CHÂTIMENT DIVIN ✦</h2><p>Votre frappe atteint sa cible. Souhaitez-vous canaliser votre puissance divine ?</p><small data-target></small><div class="divine-choices"></div><button type="button" data-pass>PASSER · Ne pas utiliser de châtiment</button>';document.body.append(d);
  const style=document.createElement('style');style.textContent='#zephyrDivineSmite{width:min(560px,calc(100vw - 24px));padding:20px;border:2px solid #e5b85f;border-radius:22px;color:#fff1cc;text-align:center;background:radial-gradient(ellipse at top,#6a451e88,transparent 65%),linear-gradient(150deg,#251a12,#111318);box-shadow:0 0 55px #e5b85f44}#zephyrDivineSmite::backdrop{background:#030508d9;backdrop-filter:blur(6px)}#zephyrDivineSmite h2{font-size:clamp(17px,4vw,23px);letter-spacing:.05em}#zephyrDivineSmite p{font-size:14px;line-height:1.4}.smite-halo{font-size:42px;color:#ffe7a5;text-shadow:0 0 28px #ffbc4a;animation:guidedPulse 1.4s ease-in-out infinite alternate}.divine-choices{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:16px 0}#zephyrDivineSmite button{min-height:58px;border:1px solid #b38a44;border-radius:12px;padding:9px;color:#fff1cc;background:linear-gradient(#65471c,#302012);font-weight:900}#zephyrDivineSmite button:disabled{opacity:.35}#zephyrDivineSmite [data-pass]{width:100%;background:#20252c;border-color:#626873}#zephyrDivineSmite small{display:block;color:#d9c296}@media(orientation:landscape) and (max-height:500px){#zephyrDivineSmite{padding:12px;width:min(680px,calc(100vw - 24px))}.smite-halo{display:none}#zephyrDivineSmite h2{margin:8px}.divine-choices{margin:10px 0}}';document.head.append(style);d.addEventListener('cancel',e=>e.preventDefault());
  const norm=v=>String(v||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
- function selectSmite(level){if(!current||!resolve||!Number.isInteger(level)||level<0||level>3||level&&s().slots[level]<1)return;current.choice=level;b.healthRefresh();const fn=resolve;resolve=null;current=null;d.close();fn(level)}
- function chooseSmite(tx){if(tx.choice!==undefined)return Promise.resolve(tx.choice);current=tx;const classification=tx.targetType||window.RPGConnect?.getStatus()?.target?.creatureType;tx.fiend=tx.fiendOverride??(/fiend|undead|fielon|mort.vivant/.test(norm(classification)));if(!tx.combatId)tx.fiend=!!document.querySelector('#fiend')?.checked;
- d.querySelector('[data-verdict]').textContent=tx.crit?'COUP CRITIQUE !':'⚔ TOUCHÉ !';d.querySelector('[data-target]').textContent=tx.fiend?'Fiélon / mort-vivant · +1d8 radiant (doublé sur critique)':(!classification||classification==='unknown')?'Type inconnu · bonus supplémentaire sous contrôle MJ':'Type confirmé par Encounter';const choices=d.querySelector('.divine-choices');choices.replaceChildren();for(let level=1;level<=3;level++){const button=document.createElement('button');button.type='button';button.dataset.smiteLevel=level;button.textContent='N'+level+' · +'+((level+1+(tx.fiend?1:0))*(tx.crit?2:1))+'d8 radiants';const left=document.createElement('small');left.textContent='Slots : '+s().slots[level];button.append(left);button.disabled=s().slots[level]<1;button.onclick=()=>selectSmite(level);choices.append(button)}d.querySelector('[data-pass]').onclick=()=>selectSmite(0);b.healthRefresh();d.showModal();return new Promise(r=>resolve=r)}
+ const landscape=window.matchMedia('(min-width:768px) and (max-width:1366px) and (min-height:600px) and (orientation:landscape)');
+ const card=document.getElementById('divineSmiteCard');
+ const levels=[...card.querySelectorAll('.smite')];
+ const fiend=document.getElementById('fiend');
+ const pass=document.getElementById('divineSmitePass');
+ const last=document.getElementById('lastHitState');
+ const availability=document.getElementById('divineSmiteAvailability');
+ const setText=(node,value)=>{if(node.textContent!==value)node.textContent=value;};
+ const damageDice=(level,tx)=>(level+1+(tx?.fiend?1:0))*(tx?.crit?2:1);
+
+ function renderSmite(){
+   const state=s(),tx=state.rpgZephyrAttack;
+   const awaiting=tx?.phase==='smite'&&tx.choice===undefined;
+   const inline=awaiting&&landscape.matches;
+   const previous=state.lastHit?.turn===state.turn?state.lastHit:null;
+   setText(last,awaiting?'Attaque '+tx.index+'/2 · '+(tx.crit?'Critique':'Touché'):
+     previous?'Dernière attaque : '+previous.index+'/2 · '+(previous.miss?'Raté':previous.crit?'Critique':'Touché'):'Aucune touche confirmée');
+   last.classList.toggle('on',awaiting);
+   const hasSlot=levels.some(button=>state.slots[button.dataset.level]>0);
+   setText(availability,awaiting?(hasSlot?'Châtiment disponible':'Aucun emplacement'):
+     previous&&!previous.miss?(previous.divineUsed?'Châtiment utilisé':'Châtiment passé'):'En attente d’une touche');
+   card.classList.toggle('is-awaiting',inline);
+   pass.hidden=!inline;
+   fiend.disabled=awaiting&&!!tx.combatId;
+   if(awaiting)fiend.checked=!!tx.fiend;
+   for(const button of levels){
+     const level=Number(button.dataset.level);
+     button.disabled=!inline||!state.slots[level];
+     setText(button.querySelector('span'),'+'+damageDice(level,inline?tx:null)+'d8');
+   }
+ }
+
+ function selectSmite(level){
+   if(!current||!resolve||!Number.isInteger(level)||level<0||level>3||level&&s().slots[level]<1)return;
+   current.choice=level;
+   const finish=resolve;
+   resolve=null;
+   current=null;
+   if(d.open)d.close();
+   b.healthRefresh();
+   finish(level);
+ }
+
+ function showSmite(){
+   if(!current||!resolve)return;
+   const tx=current;
+   if(landscape.matches){
+     if(d.open)d.close();
+     if(!document.getElementById('combat').classList.contains('active')||document.body.classList.contains('rpg-group-visible')){
+       document.querySelector('[data-nav="combat"]').click();
+     }
+     card.scrollIntoView({block:'nearest'});
+     (levels.find(button=>!button.disabled)||pass).focus({preventScroll:true});
+     return;
+   }
+   d.querySelector('[data-verdict]').textContent=tx.crit?'COUP CRITIQUE !':'⚔ TOUCHÉ !';
+   d.querySelector('[data-target]').textContent=tx.fiend?'Fiélon / mort-vivant · +1d8 radiant (doublé sur critique)':
+     tx.combatId&&tx.targetType&&tx.targetType!=='unknown'?'Type confirmé par Encounter':'Type inconnu · bonus supplémentaire sous contrôle MJ';
+   const choices=d.querySelector('.divine-choices');
+   choices.replaceChildren();
+   for(let level=1;level<=3;level++){
+     const button=document.createElement('button');
+     button.type='button';
+     button.dataset.smiteLevel=level;
+     button.textContent='N'+level+' · +'+damageDice(level,tx)+'d8 radiants';
+     const left=document.createElement('small');
+     left.textContent='Slots : '+s().slots[level];
+     button.append(left);
+     button.disabled=s().slots[level]<1;
+     button.onclick=()=>selectSmite(level);
+     choices.append(button);
+   }
+   if(!d.open)d.showModal();
+ }
+
+ function chooseSmite(tx){
+   if(tx.choice!==undefined)return Promise.resolve(tx.choice);
+   const classification=tx.targetType||window.RPGConnect?.getStatus()?.target?.creatureType;
+   tx.fiend=tx.combatId?(tx.fiendOverride??(/fiend|undead|fielon|mort.vivant/.test(norm(classification)))):(tx.fiend??fiend.checked);
+   current=tx;
+   return new Promise(finish=>{
+     resolve=finish;
+     b.healthRefresh();
+     showSmite();
+   });
+ }
+ pass.onclick=d.querySelector('[data-pass]').onclick=()=>selectSmite(0);
+ fiend.addEventListener('change',()=>{
+   if(current&&!current.combatId){
+     current.fiend=fiend.checked;
+     b.healthRefresh();
+   }
+ });
+ landscape.addEventListener('change',()=>{renderSmite();showSmite();});
  function submit(q){if(!q.combatId)return;s().rpgZephyrDamageOutbox??={};s().rpgZephyrDamageOutbox[q.attackId]=q;b.healthRefresh();api.emitLocal('attack:damage',q,q.attackId+':damage')}
  function flush(){if(!window.RPGConnect?.getStatus()?.controlled)return;const combat=window.RPGHealth.getContext().combatId;for(const q of Object.values(s().rpgZephyrDamageOutbox||{})){if(window.RPGUndo?.ledger().cancelled?.[q.actionId]||combat&&q.combatId!==combat){delete s().rpgZephyrDamageOutbox[q.attackId];continue}window.RPGResources?.begin(q.actionId);api.emitLocal('attack:damage',q,q.attackId+':damage:retry:'+crypto.randomUUID())}b.healthRefresh()}
  api.subscribe(e=>{if(e.type==='damage:resolved'&&s().rpgZephyrDamageOutbox?.[e.payload.attackId]){delete s().rpgZephyrDamageOutbox[e.payload.attackId];b.healthRefresh()}if(e.type==='attack:decision-applied'&&s().rpgZephyrAttack?.attackId===e.payload.attackId)b.healthRefresh()});
  const oldCancel=b.cancelPending;b.cancelPending=()=>{oldCancel?.();s().rpgZephyrAttack=null;current=null;if(resolve){const fn=resolve;resolve=null;fn(null)}if(d.open)d.close()};
- window.ZephyrCombat={chooseSmite,selectSmite,submit,flush,hunterDamage:tx=>{const effects=window.RPGCombatEffectsClient?.context().effects||[];const active=effects.some(e=>e.kind==='huntersMark'&&e.targetId===tx.targetId);if(!active&&!(s().conc==='Marque du chasseur'&&!tx.combatId))return 0;return Array.from({length:tx.crit?2:1},()=>1+Math.floor(Math.random()*6)).reduce((a,b)=>a+b,0)}};
+ window.ZephyrCombat={chooseSmite,selectSmite,renderSmite,submit,flush,hunterDamage:tx=>{const effects=window.RPGCombatEffectsClient?.context().effects||[];const active=effects.some(e=>e.kind==='huntersMark'&&e.targetId===tx.targetId);if(!active&&!(s().conc==='Marque du chasseur'&&!tx.combatId))return 0;return Array.from({length:tx.crit?2:1},()=>1+Math.floor(Math.random()*6)).reduce((a,b)=>a+b,0)}};
  window.ZephyrCombat.transferMark=()=>{const target=window.RPGConnect?.getStatus()?.target;if(!target||s().eco.b)return window.RPGCombatEffectsClient.notice('Sélectionne une nouvelle cible · action bonus requise');return window.RPGCombatEffectsClient.perform({kind:'huntersMark',transfer:true,targetIds:[target.id]},()=>{if(s().eco.b)return false;s().eco.b=true;return true})};
  setTimeout(()=>window.resumeZephyrAttack?.(),0);setInterval(flush,3000);
  window.RPGReactions.register({id:'zephyr-protection',label:'✦ Style Protection · désavantage',matches:q=>q.kind==='zephyr-protection',beforeClaim:async q=>(await RPGDialogs.confirm('L’allié '+q.targetName+' est-il à 1,5 m de Zéphyr, avec bouclier porté et attaquant visible ? Le MJ confirme la portée à la table.'))?{rangeConfirmed:true}:null,execute:q=>{window.RPGReactions.setAvailable(false);return{success:true,consumed:true,rangeConfirmed:q.rangeConfirmed}}});

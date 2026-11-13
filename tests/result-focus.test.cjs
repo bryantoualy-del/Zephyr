@@ -75,7 +75,7 @@ test('Zéphyr social d20 uses historical animation without ribbon double result'
  const social=html.slice(start,end);
  assert.match(social,/CompanionSocialDice\?\.show/);
  assert.match(social,/addLog\('Jet social/);
- assert.match(html,/if\(type!=='social'\)ribbon\(title/);
+ assert.match(html,/if\(notify&&type!=='social'\)ribbon\(title/);
  assert.doesNotMatch(social,/ribbon\(label\+' : '\+total/);
 });
 
