@@ -22,7 +22,6 @@ img{max-width:100%}
 /* iPad landscape — real tablet canvas, based on Brack's geometry. */
 @media (min-width:768px) and (max-width:1366px) and (min-height:600px) and (orientation:landscape){
   :root{--navh:0px}
-  html,body{overflow-x:hidden}
   body{
     padding-bottom:0;
     background:
@@ -41,7 +40,7 @@ img{max-width:100%}
     padding:10px 12px 28px;
     display:grid;
     grid-template-columns:minmax(300px,1.08fr) minmax(0,1.92fr);
-    grid-template-rows:auto auto auto auto 1fr;
+    grid-template-rows:auto auto auto 1fr;
     gap:8px 10px;
     align-items:stretch;
   }
@@ -50,7 +49,7 @@ img{max-width:100%}
     grid-column:1;
     grid-row:1;
     margin:0;
-    min-height:118px;
+    min-height:108px;
     padding:14px 92px 14px 16px;
     position:relative;
     display:flex;
@@ -89,12 +88,12 @@ img{max-width:100%}
     position:relative!important;
     top:auto!important;
     z-index:20!important;
-    min-height:118px;
+    min-height:108px;
     margin:0;
-    padding:9px;
+    padding:7px;
     display:grid;
     grid-template-columns:repeat(12,minmax(0,1fr));
-    gap:6px 7px;
+    gap:4px 7px;
     align-content:center;
     border:1px solid #343b45;
     border-radius:16px;
@@ -106,7 +105,7 @@ img{max-width:100%}
   .hudtop{
     grid-column:1/-1;
     grid-row:1;
-    grid-template-columns:minmax(180px,.95fr) minmax(0,1.25fr);
+    grid-template-columns:minmax(0,.95fr) minmax(0,1.25fr);
     gap:6px;
     margin:0;
   }
@@ -119,20 +118,20 @@ img{max-width:100%}
     gap:6px;
     margin:0;
   }
-  .chip{min-height:42px;padding:5px 6px}
+  .chip{min-height:38px;padding:4px 6px}
   .chip small{font-size:9px}.chip b{font-size:15px}
   .vitalsbar{
-    grid-column:1 / span 7;
+    grid-column:1/-1;
     grid-row:2;
     grid-template-columns:1.45fr 1fr;
     gap:6px;
     margin:0;
   }
-  .vitalctl{min-height:39px;padding:4px 5px}
+  .vitalctl{min-height:35px;padding:3px 5px}
   .vitalctl.hpquick button{min-width:58px}
   .hudbottom{
-    grid-column:8 / -1;
-    grid-row:2;
+    grid-column:1/-1;
+    grid-row:3;
     grid-template-columns:minmax(0,1fr) auto;
     gap:6px;
     align-items:stretch;
@@ -145,20 +144,20 @@ img{max-width:100%}
     min-width:0;
   }
   .slotmini{
-    min-height:39px;
+    min-height:34px;
     justify-content:center;
     padding:3px 5px;
   }
   .slotmini span{font-size:8px}
   .slotmini b{font-size:10px;min-width:18px}
   .slotmini button{width:18px;height:18px}
-  .rollmode{min-height:39px;padding:5px 9px}
+  .rollmode{min-height:34px;padding:5px 9px}
 
   /* Native turn controls are hidden by the shared standard turnbar on tablet.
      When JS has not booted yet, keep them compact and harmless. */
   .turnline{
     grid-column:1/-1;
-    grid-row:3;
+    grid-row:4;
     grid-template-columns:repeat(4,minmax(0,1fr)) minmax(110px,1.1fr);
     gap:5px;
     margin:0;
@@ -171,47 +170,38 @@ img{max-width:100%}
     margin:0;
   }
 
-  /* Shared standardized turnbar = Brack-style single landscape row. */
-  body.cc-turnbar-ready #cc-turnbar-standard,
-  #cc-turnbar-standard{
+  /* One sticky surface keeps both rows together as their heights change. */
+  .zephyr-tablet-navigation{
     grid-column:1/-1;
     grid-row:3;
-    position:sticky!important;
-    top:max(5px,env(safe-area-inset-top))!important;
-    z-index:60!important;
+    position:sticky;
+    top:calc(var(--rpg-ribbon-space,8px) + env(safe-area-inset-top,0px));
+    z-index:60;
+    display:grid;
+    gap:6px;
+    padding-block:4px;
+    background:#080a0d;
+  }
+  body.cc-turnbar-ready .zephyr-tablet-navigation #cc-turnbar-standard{
+    position:static!important;
     width:100%;
     margin:0;
     padding:6px 7px;
+    grid-template-columns:repeat(6,minmax(0,1fr)) minmax(0,1.6fr) repeat(3,minmax(0,1fr));
     border:1px solid var(--cc-turn-border,rgba(125,142,164,.42))!important;
-    border-radius:12px!important;
-    box-shadow:0 8px 22px rgba(0,0,0,.24)!important;
-    backdrop-filter:blur(12px);
-    -webkit-backdrop-filter:blur(12px);
   }
-
-  /* Horizontal section tabs, inside the app, directly under the turnbar. */
   .nav{
-    grid-column:1/-1;
-    grid-row:4;
-    position:sticky;
-    left:auto;
-    right:auto;
-    bottom:auto;
-    top:calc(max(5px,env(safe-area-inset-top)) + var(--zephyr-turnbar-h,60px) + 6px);
-    z-index:52;
+    position:static;
     width:100%;
     height:auto;
     transform:none;
     margin:0;
     padding:5px;
-    grid-template-columns:repeat(5,minmax(0,1fr));
+    grid-template-columns:repeat(var(--rpg-nav-count,5),minmax(0,1fr));
     gap:6px;
     border:1px solid #343b45;
     border-radius:12px;
-    background:rgba(8,10,13,.955);
-    box-shadow:0 6px 18px rgba(0,0,0,.18);
-    backdrop-filter:blur(12px);
-    -webkit-backdrop-filter:blur(12px);
+    background:#0e1116;
   }
   .navbtn{
     min-height:38px;
@@ -225,7 +215,7 @@ img{max-width:100%}
 
   .content{
     grid-column:1/-1;
-    grid-row:5;
+    grid-row:4;
     width:100%;
     padding:2px 0 12px;
   }
@@ -258,35 +248,23 @@ img{max-width:100%}
   .actions{gap:7px;margin-top:8px}
   .btn{min-height:42px;padding:7px 8px}
 
-  /* Combat: two independent Brack-like columns.
-     This removes the vertical hole caused by the taller Divine Smite card. */
-  #combat{row-gap:6px}
-  #combat>.zephyr-combat-main-col{
-    grid-column:1 / span 8;
+  #combat{
+    grid-template-columns:repeat(12,minmax(0,1fr));
+    align-items:stretch;
   }
-  #combat>.zephyr-combat-side-col{
-    grid-column:9 / -1;
-  }
-  #combat>.zephyr-combat-column{
-    display:flex;
-    flex-direction:column;
-    gap:7px;
-    min-width:0;
-    align-self:start;
-  }
-  #combat>.zephyr-combat-column>.card{
-    width:100%;
-    margin:0;
-  }
-  #combat>.zephyr-combat-side-col>.card:first-child{
-    padding:10px 12px;
-  }
-  #combat>.zephyr-combat-side-col>.card:first-child .meta{line-height:1.22}
-  #combat>.zephyr-combat-side-col>.card:first-child .actions{margin-top:5px}
-  #combat>.zephyr-combat-side-col>.card:first-child .smite-state{margin-top:5px;padding:6px 8px}
-  #combat #spellSmiteCard{margin-top:0}
+  #combat > .section{display:none}
+  #combat > #rpg-target-dock{grid-column:1/-1;order:-1;margin:0}
+  #attackCard,#spellSmiteCard{grid-column:1/span 8}
+  #titanCard,#combat > .arrow-card{grid-column:9/-1}
+  #attackCard,#combat > .arrow-card{align-content:center}
+  #spellSmiteCard,#combat > .arrow-card{order:1}
+  #divineSmiteCard{grid-column:1/-1;order:2}
+  #combat > [data-opportunity]{grid-column:1/-1;justify-self:end;order:3}
+  #combat > .card{margin:0;padding:10px 12px}
   #combat .smite-grid{grid-template-columns:1fr 1fr}
-  #combat .actions.three{grid-template-columns:repeat(3,minmax(0,1fr))}
+  #combat .smite-grid,#combat .actions,#combat .smite-state{margin-top:6px}
+  #combat .smite-field select,#combat .arrow-options select{min-height:38px}
+  #combat .arrow-options{margin-top:6px}
 
   /* Spells / powers exploit the landscape width. */
   #arsenal>.subpane.active,
@@ -455,15 +433,10 @@ img{max-width:100%}
   #binah>.card{grid-column:span 6}
   #binah>.binah-note{grid-column:1/-1}
 
-  /* Secondary controls stick below turnbar + section nav. */
-  .subtabs{
-    top:calc(max(5px,env(safe-area-inset-top)) + var(--zephyr-turnbar-h,60px) + var(--zephyr-nav-h,50px) + 12px);
-    z-index:46;
-  }
-  .sticky-rollmode{
-    top:calc(max(5px,env(safe-area-inset-top)) + var(--zephyr-turnbar-h,60px) + var(--zephyr-nav-h,50px) + 62px);
-    z-index:45;
-  }
+  .subtabs,.sticky-rollmode{position:static}
+
+  /* Reserve a gutter for the floating RPG control. */
+  .app{padding-right:76px}
 
   #ribbon{
     left:50%;
@@ -479,7 +452,7 @@ img{max-width:100%}
 
 /* Slight extra breathing room on the large iPad Pro without changing the composition. */
 @media (min-width:1180px) and (max-width:1366px) and (min-height:700px) and (orientation:landscape){
-  .app{padding-left:16px;padding-right:16px;gap:9px 12px}
+  .app{padding-left:16px;gap:9px 12px}
   .top{padding-left:18px}
   .card{padding:14px}
   .screen.active{gap:12px}
