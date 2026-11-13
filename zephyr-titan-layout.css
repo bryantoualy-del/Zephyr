@@ -1,0 +1,82 @@
+/* Zéphyr combat layout and Titan controls — 2026-11-13
+   Additive overrides. Keep original IDs and their connected combat handlers. */
+html,body{max-width:100%;overflow-x:clip}
+.app,.hud,.content,.screen,.card,.nav,.titan-status-line,.titan-skin-row{min-width:0}
+.titan-attack-card .titan-attack-head{display:flex;align-items:center;justify-content:space-between;gap:7px;flex-wrap:wrap}
+.titan-attack-card .titan-attack-head .title{font-size:clamp(14px,1.5vw,17px)}
+.titan-attack-badge{display:inline-flex;align-items:center;flex:none;border:1px solid #866a38;background:#342719;border-radius:999px;padding:4px 9px;font-size:10px;font-weight:850;color:#f6dc9e;white-space:nowrap}
+.titan-attack-badge.is-enlarged{border-color:#74b9c9;color:#d5f6ff;background:#173440;box-shadow:0 0 12px #78d9ee22}
+.titan-attack-stats{line-height:1.45;margin-top:7px}
+.titan-attack-stats b{color:#f8e4ba}
+#attackCard .attack-roll-choice{margin-top:9px;display:flex;align-items:center;gap:9px;color:#ced1d5}
+#attackCard .attack-roll-choice select{background:#0d1218;color:#f4f5f7;border:1px solid #586475;border-radius:9px;padding:5px 9px;min-width:115px}
+#attackCard .actions{grid-template-columns:repeat(2,minmax(0,1fr))}
+#attackCard .actions .btn{min-width:0;overflow-wrap:anywhere}
+#titanCard{border-color:#685a42;background:linear-gradient(165deg,#171a20,#11151a)}
+#titanCard.is-enlarged{border-color:#638d9d;background:linear-gradient(165deg,#17242c,#10161c)}
+#titanCard .titan-status-line{display:flex;align-items:flex-start;justify-content:space-between;gap:8px}
+#titanCard .titan-status-line .title{font-size:14px;line-height:1.3}
+#titanCard .titan-state{font-size:11px;line-height:1.35;color:#d4c4a6;margin:6px 0 0;overflow-wrap:anywhere}
+#titanCard .titan-ready{flex:none;border:1px solid #7d6541;background:#282117;color:#f1d79e;border-radius:999px;padding:5px 8px;font-size:10px;font-weight:850}
+#titanCard.is-enlarged .titan-ready{border-color:#668c9c;color:#a8edff;background:#152f38}
+#titanCard .titan-action-zone{margin-top:11px}
+#titanCard .titan-action-zone .btn{width:100%;min-height:44px;padding:9px}
+#titanCard .titan-action-zone button[hidden],#titanCard .titan-skin-row button[hidden]{display:none!important}
+#titanCard .titan-skin-row{display:flex;align-items:center;justify-content:space-between;gap:8px;border:1px solid #394551;border-radius:11px;background:#0e141b;padding:9px;margin-top:9px}
+#titanCard .titan-skin-row.is-active{border-color:#547f8d;background:#102329}
+#titanCard .titan-skin-copy{display:flex;flex-direction:column;gap:4px;min-width:0}
+#titanCard .titan-skin-copy strong{font-size:12px;color:#e0edf4}
+#titanCard .titan-skin-copy small{font-size:10px;color:#a5bac8;line-height:1.3;overflow-wrap:anywhere}
+#titanCard #titanStoneSkin{min-height:36px;min-width:72px;font-size:11px;padding:5px 8px;border-color:#885a5f;color:#ffbfc2}
+#titanCard .titan-details{border-top:1px solid #313b46;margin-top:10px}
+#titanCard .titan-details summary{cursor:pointer;list-style:none;font-size:11px;font-weight:800;color:#e0c08b;padding:10px 0 2px}
+#titanCard .titan-details summary::-webkit-details-marker{display:none}
+#titanCard .titan-details summary::before{content:'⌄ ';color:#b88b4a}
+#titanCard .titan-detail-content{font-size:11px;line-height:1.45;color:#aeb7c2;padding:7px 0 2px;overflow-wrap:anywhere}
+#titanCard .titan-detail-content p{margin:6px 0}
+#titanCard .titan-detail-content label{display:flex;align-items:flex-start;gap:8px;margin-top:9px;line-height:1.4}
+#titanCard #titanWeaponSmite{width:18px;height:18px;flex:none;margin:0}
+@media(min-width:768px) and (max-width:1366px) and (min-height:600px) and (orientation:landscape){
+  /* Put stats, controls and rest/concentration in distinct grid rows. */
+  .hud .hudrow{grid-column:1/-1;grid-row:1;min-width:0}
+  .hud .vitalsbar{grid-column:1/span 7;grid-row:2;min-width:0}
+  .hud .hudbottom{grid-column:8/-1;grid-row:2;min-width:0}
+  .hud .hudtop{grid-column:1/-1;grid-row:3;min-width:0}
+  .hud .slotstrip{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .hud .slotmini{padding:3px;gap:3px}
+  .hud .slotmini button{width:27px;height:27px;min-width:27px;line-height:24px}
+  .hud .slotmini b{font-size:11px}
+  .nav{grid-template-columns:repeat(6,minmax(0,1fr))!important}
+  .nav .navbtn{font-size:11px;min-width:0;overflow-wrap:anywhere}
+  #combat>.zephyr-combat-column{min-width:0}
+  #combat .titan-equipment-card{padding:11px}
+  #titanCard .titan-status-line{flex-wrap:wrap}
+}
+@media(min-width:700px) and (orientation:portrait){
+  /* Avoid the 640px phone column trapped inside a wide portrait tablet. */
+  .app{width:100%;max-width:min(900px,100%);padding-inline:10px}
+  .content{min-width:0}
+  .nav{width:min(900px,100%);grid-template-columns:repeat(6,minmax(0,1fr));padding-inline:10px}
+  .navbtn{min-width:0;overflow-wrap:anywhere}
+  .hudrow,.vitalsbar,.hudbottom{min-width:0}
+}
+@media(max-width:699px){
+  .app,.content{width:100%;max-width:100%}
+  .content{padding:8px 9px calc(var(--navh) + 6px)}
+  .nav{grid-template-columns:repeat(6,minmax(0,1fr));gap:2px}
+  .navbtn{min-width:0;font-size:9px;line-height:1.12;overflow-wrap:anywhere;padding:4px 1px}
+  .navbtn .ico{font-size:18px}
+  .hudrow{grid-template-columns:1.2fr .9fr .7fr .7fr}
+  .vitalsbar{grid-template-columns:repeat(2,minmax(0,1fr))}
+  #attackCard .actions .btn{min-height:45px;font-size:12px;padding:8px 4px}
+  #titanCard .titan-status-line .title{font-size:13px}
+  .hud .slotmini button{min-width:25px!important;min-height:25px!important;width:25px!important;height:25px!important;line-height:22px!important}
+  .hudbottom .rollmode{font-size:9px;padding:4px 6px}
+}
+@media(max-width:370px){
+  #attackCard .actions{grid-template-columns:1fr}
+  .navbtn{font-size:8px}
+  .slotmini{gap:2px;padding:2px 3px}
+  .hudbottom{gap:3px}
+  .hud .slotmini button{min-width:22px!important;min-height:22px!important;width:22px!important;height:22px!important}
+}

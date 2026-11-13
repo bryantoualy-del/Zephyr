@@ -15,8 +15,8 @@ const engine=process.env.E2E_BROWSER==='webkit'?webkit:chromium;
 let browser;
 try{
  browser=await engine.launch(engine===webkit?{}:{args:['--no-sandbox','--disable-dev-shm-usage','--disable-gpu']});
- for(const width of [390,1180]){
-  const page=await browser.newPage({viewport:{width,height:820}});
+ for(const [width,height] of [[390,844],[768,1024],[1180,820]]){
+  const page=await browser.newPage({viewport:{width,height}});
   const errors=[];page.on('pageerror',e=>errors.push(e.message));
   await page.goto(base);await page.waitForFunction(()=>window.__CompanionBridge?.read);
   const initial=await page.evaluate(()=>{const s=window.__CompanionBridge.read();return{hp:s.hp,max:s.maxHp,lay:s.lay,slot3:s.slots[3],ac:window.__CompanionBridge.ac(s)}});
@@ -25,6 +25,24 @@ try{
   await page.reload();await page.waitForFunction(()=>window.__CompanionBridge?.read);
   const migrated=await page.evaluate(()=>{const s=window.__CompanionBridge.read();return{hp:s.hp,max:s.maxHp,lay:s.lay,slot3:s.slots[3],ac:window.__CompanionBridge.ac(s)}});
   assert.deepEqual(migrated,{hp:58,max:92,lay:55,slot3:3,ac:20});
+  const ux=await page.evaluate(()=>{
+    const $=id=>document.getElementById(id);
+    const before={mode:$('titanAttackMode').textContent,damage:$('titanAttackDamage').textContent,stopHidden:$('titanStop').hidden};
+    $('titanGrow').click();
+    const enlarged={mode:$('titanAttackMode').textContent,damage:$('titanAttackDamage').textContent,skin:$('titanSkinState').textContent,growHidden:$('titanGrow').hidden,stopVisible:!$('titanStop').hidden};
+    $('titanStoneSkin').click();const skinBroken=$('titanSkinState').textContent;
+    $('titanStop').click();const stopped=$('titanAttackMode').textContent;
+    return {before,enlarged,skinBroken,stopped,scrollWidth:document.documentElement.scrollWidth,viewportWidth:window.innerWidth};
+  });
+  assert.deepEqual(ux.before,{mode:'Taille normale',damage:'1d8+7',stopHidden:true});
+  assert.equal(ux.enlarged.mode,'AGRANDI');
+  assert.equal(ux.enlarged.damage,'2d8+7');
+  assert.match(ux.enlarged.skin,/Active/);
+  assert.equal(ux.enlarged.growHidden,true);
+  assert.equal(ux.enlarged.stopVisible,true);
+  assert.match(ux.skinBroken,/Rompue/);
+  assert.equal(ux.stopped,'Taille normale');
+  assert.ok(ux.scrollWidth<=ux.viewportWidth+2,'no horizontal overflow at '+width+'px: '+ux.scrollWidth+' > '+ux.viewportWidth);
   assert.deepEqual(errors,[],'no browser runtime errors');
   await page.close();
  }
