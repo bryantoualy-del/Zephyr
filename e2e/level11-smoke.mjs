@@ -157,9 +157,8 @@ async function attack(page,natural,hit){
 }
 async function checkSmite(page,width){
   const tablet=landscape(width);
-  await page.locator('#titanCard summary').tap();
-  await page.locator('#titanWeaponSmite').check();
-  await page.locator('#titanCard summary').tap();
+  assert.equal(await page.locator('#titanWeaponSmite').count(),0,'improved smite is always enabled on gauntlets');
+  assert.match(await page.locator('.titan-improved-smite').textContent(),/\+1d8 radiant/);
   await page.locator('#fiend').check();
   await page.locator('#guidedBtn').tap();
   await page.locator('#armSpellSmite').tap();
