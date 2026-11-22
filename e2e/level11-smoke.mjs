@@ -103,7 +103,7 @@ try{
   await page.waitForSelector('.rpg-connect-panel:not([hidden])');
   await page.evaluate(()=>RPGConnect.closePanel());
   if(width===1180||width===390)await checkSmite(page,width);
-  if(width===1180){await checkExpiry(page);await checkRpgConnect(page);}
+  if(width===1180){await checkExpiry(page);await checkRpgConnect(page);await checkSpiritualWeapon(browser);}
   assert.deepEqual(errors,[],'no browser runtime errors at '+width+'px');
   console.log('  Combat '+width+' × '+height+' passed');
   await browser.close();
@@ -267,5 +267,67 @@ async function checkRpgConnect(page){
   }finally{
     for(const socket of mock.clients)socket.terminate();
     await new Promise(done=>mock.close(done));
+  }
+}
+
+
+async function checkSpiritualWeapon(browser) {
+  const page = await browser.newPage({viewport:{width:1180,height:820},hasTouch:true});
+  try {
+    await page.goto(base+'/');
+    const card = page.locator('#spiritualWeaponCard');
+    const invoke = page.locator('[data-name="Arme spirituelle"]');
+    async function cast(level) {
+      await page.locator('[data-nav="arsenal"]').tap();
+      await invoke.evaluate(button=>{button.closest('details').open=true;});
+      await page.locator('#spiritualLevel').selectOption(String(level));
+      await invoke.tap();
+      assert.match(await page.locator('#spiritualSpellState').textContent(),/10\/10/);
+      await page.locator('[data-nav="combat"]').tap();
+      await card.waitFor();
+    }
+    const next = revision => page.evaluate(revision => RPGTable.context({
+      session:{phase:'fight',combatId:'spiritual-test',activeCharacterId:'zephyr',
+        activeParticipantId:'zephyr-test',round:revision,turnStartRevision:revision,
+        sessionRevision:revision}
+    }),revision);
+    await page.evaluate(()=>RPGTable.accept('table-free','spiritual-test'));
+    await next(1);
+    const slots = await page.evaluate(()=>__CompanionBridge.read().slots[3]);
+    await cast(3);
+    assert.equal(await page.evaluate(()=>__CompanionBridge.read().slots[3]),slots-1);
+    assert.equal(await page.locator('#spiritualDamage').textContent(),'1d8+4');
+    assert.equal(await page.locator('#spiritualMove').isDisabled(),true);
+    await checkWidth(page,1180,'poings du serment');
+    await next(2);
+    await next(2);
+    assert.equal(await page.locator('#spiritualTurns').textContent(),'9/10 tours');
+    await page.locator('#spiritualMove').tap();
+    assert.equal(await page.evaluate(()=>__CompanionBridge.read().eco.b),true);
+    assert.equal(await page.locator('#spiritualStrike').isEnabled(),true);
+    await page.reload();
+    await card.waitFor();
+    assert.equal(await page.locator('#spiritualMove').isDisabled(),true);
+    await page.evaluate(()=>{
+      __CompanionBridge.read().rollMode='auto';
+      Math.random=()=>.5;
+    });
+    await page.locator('#spiritualStrike').tap();
+    const hit = page.locator('#hitYes');
+    await hit.waitFor();
+    assert.equal(await page.evaluate(()=>__CompanionBridge.read().dmg),0);
+    await hit.tap();
+    await page.waitForFunction(()=>!__CompanionBridge.read().rpgSpiritualAttack);
+    assert.equal(await page.evaluate(()=>__CompanionBridge.read().dmg),9);
+    assert.equal(await page.locator('#spiritualStrike').isDisabled(),true);
+    for(let revision=3;revision<=11;revision++)await next(revision);
+    assert.equal(await card.isVisible(),false);
+    await cast(2);
+    await page.locator('#spiritualDismiss').tap();
+    assert.equal(await card.isVisible(),false);
+    await page.reload();
+    assert.equal(await card.isVisible(),false);
+  } finally {
+    await page.close();
   }
 }
